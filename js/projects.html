@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Projects | Md. Sazedur Rahman</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Projects by Md. Sazedur Rahman">
+  <link rel="shortcut icon" href="Images/icon.png" type="image/x-icon">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap">
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 50px 0 20px;
+    }
+
+    .project-card {
+      margin-bottom: 30px;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-card .card-body h5 {
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: #ffffff;
+      padding: 30px 0;
+      margin-top: 50px;
+    }
+
+    footer a {
+      color: #adb5bd;
+    }
+
+    footer a:hover {
+      color: #ffffff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Md. Sazedur Rahman</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+          <li class="nav-item active"><a class="nav-link" href="projects.html">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#publications">Publications</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#cv">CV</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Projects Section -->
+  <section class="container py-5">
+    <h2 class="section-title">My Projects</h2>
+    <div class="row">
+
+      <!-- Project 1 -->
+      <div class="col-md-6">
+        <div class="card project-card">
+          <div class="card-body">
+            <h5 class="card-title">Federated Rockburst Detector</h5>
+            <p class="card-text">A privacy-preserving rockburst classification system using Federated Learning and Secure Aggregation. Built using PyTorch and custom mining datasets.</p>
+            <a href="https://github.com/sazed49/rockburst-fl" target="_blank" class="btn btn-outline-primary btn-sm">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="col-md-6">
+        <div class="card project-card">
+          <div class="card-body">
+            <h5 class="card-title">LFighter Enhanced</h5>
+            <p class="card-text">Modified the LFighter framework to detect label-flip attacks more robustly in federated settings with Paillier encryption support.</p>
+            <a href="https://github.com/sazed49/LFFighter" target="_blank" class="btn btn-outline-primary btn-sm">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="col-md-6">
+        <div class="card project-card">
+          <div class="card-body">
+            <h5 class="card-title">SecureFL MinerSim</h5>
+            <p class="card-text">Simulated a federated learning setup with non-IID data across multiple simulated miners in an experimental mine. Implemented untargeted attack detection.</p>
+            <a href="#" target="_blank" class="btn btn-outline-primary btn-sm disabled">Private</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="col-md-6">
+        <div class="card project-card">
+          <div class="card-body">
+            <h5 class="card-title">Android Bus Tracker</h5>
+            <p class="card-text">An Android app that allows users to track university buses in real time using GPS and Firebase. Designed for smooth user experience and minimal latency.</p>
+            <a href="https://github.com/sazed49/BusTracker" target="_blank" class="btn btn-outline-primary btn-sm">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>&copy; 2025 Md. Sazedur Rahman | <a href="https://github.com/sazed49">GitHub</a> | <a href="mailto:sazedcse17@gmail.com">Email Me</a></p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
