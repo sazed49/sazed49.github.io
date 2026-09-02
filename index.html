@@ -184,44 +184,111 @@
       .hero-title{ font-size: 36px; }
     }
     /* Selected Publications */
-.selected-publications {
-  padding-left: 22px;
-  margin-top: 15px;
+/* Selected Work / Publications */
+
+.selected-work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.selected-publications li {
-  padding-left: 6px;
-  margin-bottom: 18px;
-  line-height: 1.55;
+.selected-work-header h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #182b3e;
 }
 
-.selected-publications li > strong {
+.all-publications {
+  color: #155a8a;
   font-size: 15px;
-  font-weight: 600;
-  color: #222;
-}
-
-.pub-authors {
-  font-size: 13px;
-  color: #555;
-}
-
-.pub-venue {
-  font-size: 13px;
-  color: #777;
-  font-style: italic;
-}
-
-.publication-link {
-  color: var(--accent);
-  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
 }
 
-.publication-link:hover {
+.all-publications:hover {
   color: var(--accent);
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+.publication-item {
+  border-top: 1px solid #d8e0e8;
+  padding: 18px 0 20px;
+}
+
+.publication-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.publication-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #182b3e;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.publication-venue {
+  font-size: 15px;
+  color: #718096;
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.publication-description {
+  margin-top: 5px;
+  margin-bottom: 7px;
+  font-size: 15px;
+  color: #718096;
+  line-height: 1.6;
+}
+
+.publication-authors {
+  font-size: 13px;
+  color: #5f6f7f;
+  margin-bottom: 6px;
+}
+
+.publication-links a {
+  color: #155a8a;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  margin-right: 16px;
+}
+
+.publication-links a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .selected-work-header h3 {
+    font-size: 23px;
+  }
+
+  .publication-top {
+    display: block;
+  }
+
+  .publication-venue {
+    margin-top: 5px;
+    white-space: normal;
+  }
+
+  .publication-title {
+    font-size: 17px;
+  }
+
+  .publication-description {
+    font-size: 14px;
+  }
 }
 
 
@@ -323,102 +390,181 @@ Phone: +1 573-647-2108
     </section>
 
     <!-- Selected Publications -->
+<!-- Selected Work -->
 <section id="publications" class="section">
-  <h3>Selected Publications</h3>
 
-  <ol class="selected-publications">
+  <div class="selected-work-header">
 
-    <li>
-      <strong>
-        Label-Flip Attack Detection via Trust-Weighted Aggregation in
-        Federated Learning for Underground Mine Security
-      </strong>
-      <br>
-      <span class="pub-authors">
-        <strong>Md. Sazedur Rahman</strong>, Sanjay Madria, Samuel Frimpong
-      </span>
-      <br>
-      <span class="pub-venue">
-        Proceedings of the 20th ACM International Conference on
-        Distributed and Event-Based Systems (DEBS), 2026.
-      </span>
-    </li>
+    <h3>Selected Work</h3>
 
-    <li>
-      <strong>
+    <a href="publications.html" class="all-publications">
+      All publications &rarr;
+    </a>
+
+  </div>
+
+
+  <!-- Paper 1 -->
+  <div class="publication-item">
+
+    <div class="publication-top">
+
+      <h4 class="publication-title">
+        Label-Flip Attack Detection via Trust-Weighted Aggregation
+        in Federated Learning for Underground Mine Security
+      </h4>
+
+      <div class="publication-venue">
+        ACM DEBS · 2026
+      </div>
+
+    </div>
+
+    <p class="publication-description">
+      Trust-weighted federated learning defense for detecting and
+      mitigating label-flip attacks in underground mining environments.
+    </p>
+
+    <div class="publication-authors">
+      <strong>Md. Sazedur Rahman</strong>, Sanjay Madria, Samuel Frimpong
+    </div>
+
+    <div class="publication-links">
+      <a href="#">Paper</a>
+      <a href="https://github.com/sazed49/DEBS_2026"
+         target="_blank">Code</a>
+    </div>
+
+  </div>
+
+
+  <!-- Paper 2 -->
+  <div class="publication-item">
+
+    <div class="publication-top">
+
+      <h4 class="publication-title">
         Future Mining: Learning for Safety and Security
-      </strong>
-      <br>
-      <span class="pub-authors">
-        <strong>Md. Sazedur Rahman</strong>, M. R. Jewel, Sanjay Madria
-      </span>
-      <br>
-      <span class="pub-venue">
-        18th International Conference on COMmunication Systems
-        &amp; NETworkS (COMSNETS), 2026.
-      </span>
-    </li>
+      </h4>
 
-    <li>
-      <strong>
+      <div class="publication-venue">
+        COMSNETS · 2026
+      </div>
+
+    </div>
+
+    <p class="publication-description">
+      Exploring learning-driven approaches for improving safety,
+      security, and intelligent operations in future mining systems.
+    </p>
+
+    <div class="publication-authors">
+      <strong>Md. Sazedur Rahman</strong>, M. R. Jewel, Sanjay Madria
+    </div>
+
+    <div class="publication-links">
+      <a href="#">Paper</a>
+    </div>
+
+  </div>
+
+
+  <!-- Paper 3 -->
+  <div class="publication-item">
+
+    <div class="publication-top">
+
+      <h4 class="publication-title">
         Detecting Untargeted Attacks and Mitigating Unreliable Updates
         in Federated Learning for Underground Mining Operations
-      </strong>
-      <br>
-      <span class="pub-authors">
-        <strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy,
-        Sanjay Madria, Samuel Frimpong
-      </span>
-      <br>
-      <span class="pub-venue">
-        IEEE 22nd International Conference on Mobile Ad-Hoc and
-        Smart Systems (MASS), 2025.
-      </span>
-    </li>
+      </h4>
 
-    
+      <div class="publication-venue">
+        IEEE MASS · 2025
+      </div>
 
-    <li>
-      <strong>
+    </div>
+
+    <p class="publication-description">
+      Robust federated learning framework for detecting untargeted attacks
+      and reducing the influence of unreliable client updates.
+    </p>
+
+    <div class="publication-authors">
+      <strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy,
+      Sanjay Madria, Samuel Frimpong
+    </div>
+
+    <div class="publication-links">
+      <a href="#">Paper</a>
+      <a href="#">Project</a>
+    </div>
+
+  </div>
+
+
+  <!-- Paper 4 -->
+  <div class="publication-item">
+
+    <div class="publication-top">
+
+      <h4 class="publication-title">
         CAV-AD: A Robust Framework for Detection of Anomalous Data
         and Malicious Sensors in CAV Networks
-      </strong>
-      <br>
-      <span class="pub-authors">
-        <strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy,
-        Sanjay Madria, Samuel Frimpong
-      </span>
-      <br>
-      <span class="pub-venue">
-        IEEE 21st International Conference on Mobile Ad-Hoc and
-        Smart Systems (MASS), 2024.
-      </span>
-    </li>
+      </h4>
 
-    
+      <div class="publication-venue">
+        IEEE MASS · 2024
+      </div>
 
-    <li>
-      <strong>
+    </div>
+
+    <p class="publication-description">
+      An anomaly-detection framework for identifying malicious sensors
+      and abnormal data in connected and autonomous vehicle networks.
+    </p>
+
+    <div class="publication-authors">
+      <strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy,
+      Sanjay Madria, Samuel Frimpong
+    </div>
+
+    <div class="publication-links">
+      <a href="#">Paper</a>
+    </div>
+
+  </div>
+
+
+  <!-- Paper 5 -->
+  <div class="publication-item">
+
+    <div class="publication-top">
+
+      <h4 class="publication-title">
         Computing Skyline Query on Incomplete Data
-      </strong>
-      <br>
-      <span class="pub-authors">
-        <strong>Md. Sazedur Rahman</strong>, KMA Hasan
-      </span>
-      <br>
-      <span class="pub-venue">
-        Proceedings of the 2nd International Conference on Big Data,
-        IoT and Machine Learning, 2024.
-      </span>
-    </li>
+      </h4>
 
-  </ol>
+      <div class="publication-venue">
+        BigDML · 2024
+      </div>
 
-  <p class="mt-3">
-    <a href="publications.html" class="publication-link">
-      View all publications <i class="fas fa-arrow-right"></i>
-    </a>
-  </p>
+    </div>
+
+    <p class="publication-description">
+      Efficient skyline-query processing techniques for datasets
+      containing incomplete and missing information.
+    </p>
+
+    <div class="publication-authors">
+      <strong>Md. Sazedur Rahman</strong>, KMA Hasan
+    </div>
+
+    <div class="publication-links">
+      <a href="#">Paper</a>
+    </div>
+
+  </div>
 
 </section>
 
