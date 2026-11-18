@@ -6,392 +6,479 @@
 <title>Md. Sazedur Rahman | Secure federated learning for underground mines</title>
 <meta name="description" content="Md. Sazedur Rahman is a PhD student in computer science at Missouri S&T. He builds defenses against poisoning attacks in federated learning and tests them on real underground mine data.">
 <meta property="og:title" content="Md. Sazedur Rahman">
-<meta property="og:description" content="Federated learning that keeps working when some clients send bad updates.">
+<meta property="og:description" content="Federated learning defenses that keep the model honest, tested on real underground mine data.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #e9edf0;
-    --surface: #f6f8f9;
-    --ink: #14212b;
-    --muted: #55646f;
-    --line: #c7d1d8;
-    --trust: #17708a;
-    --poison: #cf4a2a;
-    --lamp: #f1b83a;
-    --link: #0f5f78;
-    --head: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --bg: #f1eee8;
+    --bg2: #e9e5dc;
+    --ink: #16150f;
+    --muted: #6a665c;
+    --line: #d8d3c6;
+    --accent: #e85d2c;
+    --accent-ink: #b9400f;
+    --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    --wrap: 1180px;
   }
   :root[data-theme="dark"] {
-    --bg: #11181e;
-    --surface: #182129;
-    --ink: #e6edf1;
-    --muted: #9aabb7;
-    --line: #2b3944;
-    --trust: #4fc0dd;
-    --poison: #ff7a59;
-    --link: #6fd0e8;
+    --bg: #131210;
+    --bg2: #1b1a17;
+    --ink: #efece4;
+    --muted: #a09b8e;
+    --line: #2c2a25;
+    --accent: #ff7a45;
+    --accent-ink: #ff9a70;
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 18px;
-    line-height: 1.65;
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  a { color: var(--link); text-underline-offset: 3px; text-decoration-thickness: 1px; }
-  a:hover { text-decoration-thickness: 2px; }
-  :focus-visible { outline: 3px solid var(--lamp); outline-offset: 3px; border-radius: 2px; }
-  h1, h2, h3 { font-family: var(--head); line-height: 1.15; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
-  p { margin: 0 0 1em; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  h1, h2, h3, p { margin: 0; }
+  em { font-style: italic; color: var(--accent); }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .mono { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
-  /* layout: rail + main */
-  .shell { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: 100vh; }
-  .rail {
-    position: sticky; top: 0; align-self: start; height: 100vh;
-    padding: 40px 28px; display: flex; flex-direction: column; gap: 28px;
-    border-right: 1px solid var(--line);
+  /* nav */
+  .nav {
+    position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
   }
-  .rail .name { font-family: var(--head); font-weight: 700; font-size: 1.25rem; line-height: 1.2; text-decoration: none; color: var(--ink); }
-  .rail .role { color: var(--muted); font-size: 0.95rem; margin-top: 6px; line-height: 1.45; }
-  .rail nav { display: flex; flex-direction: column; gap: 2px; }
-  .rail nav a {
-    font-family: var(--head); font-weight: 500; font-size: 1rem; color: var(--muted);
-    text-decoration: none; padding: 6px 0 6px 14px; border-left: 3px solid transparent;
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-family: var(--serif); font-size: 1.7rem; line-height: 1; }
+  .brand svg { width: 30px; height: 30px; flex: none; }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; color: var(--muted); padding: 6px 0; border-bottom: 2px solid transparent;
   }
-  .rail nav a:hover { color: var(--ink); }
-  .rail nav a[aria-current="true"] { color: var(--ink); border-left-color: var(--lamp); }
-  .rail .foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
   .theme-btn {
-    font: 500 0.9rem var(--head); color: var(--ink); background: transparent;
-    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer;
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: transparent;
+    color: var(--ink); cursor: pointer; display: grid; place-items: center; flex: none;
   }
   .theme-btn:hover { border-color: var(--muted); }
-
-  main { padding: 56px clamp(20px, 5vw, 72px) 40px; max-width: 980px; }
-  section { padding: 56px 0 8px; }
-  section:first-child { padding-top: 0; }
-  h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-bottom: 20px; }
+  .theme-btn svg { width: 18px; height: 18px; }
 
   /* hero */
-  .hero h1 { font-size: clamp(2.2rem, 5.2vw, 3.7rem); font-weight: 750; max-width: 16ch; letter-spacing: -0.025em; }
-  .lede { font-size: 1.2rem; max-width: 58ch; color: var(--muted); margin: 22px 0 32px; }
-  .lede strong { color: var(--ink); font-weight: 600; }
-
-  .sim {
-    margin: 0; background: var(--surface); border: 1px solid var(--line);
-    border-radius: 6px; padding: 16px 16px 20px;
+  .hero { position: relative; overflow: hidden; padding: clamp(64px, 11vh, 120px) 0 36px; }
+  #graph {
+    position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; cursor: crosshair;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
   }
-  .sim-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 0 4px 4px; }
-  .sim-top .title { font-family: var(--head); font-weight: 600; font-size: 1rem; }
-  .sim-top .round { font-family: var(--head); font-size: 0.95rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .sim svg { display: block; width: 100%; height: auto; max-height: 460px; }
-  .line { stroke: var(--trust); stroke-linecap: round; transition: stroke 0.3s; }
-  .client .disc { fill: var(--surface); stroke: var(--trust); stroke-width: 2.5; transition: stroke 0.3s, fill 0.3s; }
-  .client text { font: 600 13px var(--head); fill: var(--ink); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-  .client { cursor: pointer; }
-  .client.bad .disc { stroke: var(--poison); fill: color-mix(in srgb, var(--poison) 16%, var(--surface)); }
-  .client.bad .line-ref { stroke: var(--poison); }
-  .client:hover .disc { stroke-width: 4; }
-  .server .disc { fill: var(--ink); }
-  .server text { font: 600 13px var(--head); fill: var(--bg); text-anchor: middle; dominant-baseline: central; }
-  .dot { fill: var(--trust); }
-  .dot.bad { fill: var(--poison); }
-
-  .meters { display: grid; gap: 12px; margin: 14px 4px 10px; }
-  .meter { display: grid; grid-template-columns: 150px 1fr 56px; align-items: center; gap: 12px; font-family: var(--head); font-size: 0.95rem; }
-  .meter .track { height: 12px; background: var(--bg); border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
-  .meter .fill { height: 100%; width: 0; border-radius: 999px; transition: width 0.35s ease; }
-  .meter.plain .fill { background: var(--poison); }
-  .meter.trust .fill { background: var(--trust); }
-  .meter .pct { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
-  .sim figcaption { font-size: 0.9rem; color: var(--muted); line-height: 1.5; margin: 6px 4px 0; }
-  .sim .reset {
-    font: 500 0.9rem var(--head); color: var(--ink); background: transparent; border: 1px solid var(--line);
-    border-radius: 999px; padding: 5px 14px; cursor: pointer; margin: 12px 4px 0;
+  .hero-inner { position: relative; z-index: 1; pointer-events: none; }
+  .hero-inner a, .hero-inner button { pointer-events: auto; }
+  .hero-top { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .hero-top .who { display: flex; align-items: center; gap: 10px; }
+  .hero-top .who::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .big-name {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(3.6rem, 12.5vw, 10.5rem);
+    line-height: 0.92; letter-spacing: -0.02em; margin: 26px 0 40px;
   }
-  .sim .reset:hover { border-color: var(--muted); }
+  .big-name span { display: block; }
+  .hero-rule { border: 0; border-top: 1px solid var(--line); margin: 0 0 40px; }
+  .hero-cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; }
+  .lede { font-family: var(--serif); font-size: clamp(1.9rem, 3.7vw, 3.1rem); line-height: 1.08; letter-spacing: -0.01em; max-width: 20ch; }
+  .hero-side p { color: var(--muted); font-size: 1.05rem; max-width: 40ch; margin-bottom: 24px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px;
+    font: 500 1rem var(--sans); text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: transparent;
+  }
+  .btn:hover { border-color: var(--ink); }
+  .btn.solid { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn.solid:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .status {
+    margin-top: 44px; display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--muted);
+  }
+  .status b { color: var(--accent); font-weight: 500; }
+  .status .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .chip-btn {
+    font: 400 0.76rem var(--mono); letter-spacing: 0.06em; color: var(--ink); background: transparent;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer;
+  }
+  .chip-btn:hover { border-color: var(--accent); color: var(--accent-ink); }
 
-  /* research rows */
-  .threads { display: grid; gap: 0; }
-  .thread { padding: 24px 0 24px 22px; border-left: 3px solid var(--line); }
-  .thread:hover { border-left-color: var(--trust); }
-  .thread h3 { font-size: 1.3rem; margin-bottom: 8px; }
-  .thread p { max-width: 62ch; margin-bottom: 8px; }
-  .thread .see { font-family: var(--head); font-size: 0.95rem; color: var(--muted); margin: 0; }
+  /* venue strip */
+  .strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; background: var(--bg); }
+  .strip-track { display: flex; width: max-content; animation: slide 36s linear infinite; }
+  .strip span { font-family: var(--serif); font-size: 1.9rem; padding: 14px 26px; white-space: nowrap; }
+  .strip i { color: var(--accent); font-style: normal; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* sections */
+  section.block { padding: clamp(72px, 11vw, 130px) 0 0; }
+  .sec-label { display: flex; gap: 14px; align-items: baseline; margin-bottom: 20px; }
+  .sec-label b { color: var(--accent); font-weight: 500; }
+  h2.title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: 1; letter-spacing: -0.015em; max-width: 18ch; }
+  .sec-intro { color: var(--muted); max-width: 54ch; margin-top: 18px; }
+
+  /* about */
+  .about-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 56px; margin-top: 48px; align-items: start; }
+  .about-grid.no-photo { grid-template-columns: minmax(0, 1fr); }
+  .portrait { margin: 0; }
+  .portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; display: block; background: var(--bg2); }
+  .about-text { font-family: var(--serif); font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.14; letter-spacing: -0.01em; max-width: 30ch; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 28px 32px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .facts dt { margin-bottom: 8px; }
+  .facts dd { margin: 0; font-size: 0.98rem; line-height: 1.5; }
+  .latest { margin-top: 44px; }
+  .latest ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 14px; }
+  .latest li { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .latest li:first-child { border-top: 0; padding-top: 0; }
+
+  /* research */
+  .threads { margin-top: 52px; border-top: 1px solid var(--line); }
+  .thread { display: grid; grid-template-columns: 70px minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px 40px; padding: 36px 0; border-bottom: 1px solid var(--line); }
+  .thread .letter { font-family: var(--serif); font-size: 2.6rem; color: var(--accent); line-height: 1; }
+  .thread h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.05; }
+  .thread p { color: var(--muted); max-width: 56ch; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .tag { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink); }
 
   /* papers */
-  .papers { list-style: none; margin: 0; padding: 0; }
-  .paper { display: grid; grid-template-columns: 76px 1fr; gap: 8px 20px; padding: 24px 0; border-top: 1px solid var(--line); }
-  .paper:last-child { border-bottom: 1px solid var(--line); }
-  .paper .when { font-family: var(--head); font-weight: 700; font-size: 1.15rem; color: var(--muted); }
-  .paper h3 { font-size: 1.2rem; line-height: 1.25; margin-bottom: 6px; }
-  .paper .venue { font-family: var(--head); font-weight: 600; font-size: 0.95rem; color: var(--trust); margin-bottom: 6px; }
-  .paper .authors { font-size: 0.95rem; color: var(--muted); margin-bottom: 8px; }
+  .papers { list-style: none; margin: 52px 0 0; padding: 0; border-top: 1px solid var(--line); }
+  .paper { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 8px 36px; padding: 30px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .paper .yr { font-family: var(--serif); font-size: 2.1rem; line-height: 1; color: var(--accent); }
+  .paper .venue { margin-bottom: 8px; }
+  .paper h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.12; max-width: 34ch; }
+  .paper .authors { color: var(--muted); font-size: 0.95rem; margin-top: 10px; }
   .paper .authors b { color: var(--ink); font-weight: 600; }
-  .paper .summary { margin-bottom: 10px; max-width: 62ch; }
-  .paper .links { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
-  .paper .links a {
-    font-family: var(--head); font-weight: 500; font-size: 0.9rem; text-decoration: none;
-    border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; color: var(--ink);
-  }
-  .paper .links a:hover { border-color: var(--trust); color: var(--trust); }
-
-  /* news */
-  .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-  .news li { display: grid; grid-template-columns: 76px 1fr; gap: 20px; }
-  .news .when { font-family: var(--head); font-weight: 700; color: var(--muted); }
+  .paper .sum { margin-top: 8px; color: var(--muted); max-width: 62ch; font-size: 0.98rem; }
+  .paper .actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 6px; }
 
   /* background */
-  .bg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 36px; }
-  .bg-grid h3 { font-size: 1.05rem; margin-bottom: 6px; }
-  .bg-grid p { margin: 0; font-size: 1rem; }
-  .bg-grid .sub { color: var(--muted); font-size: 0.92rem; }
+  .timeline { margin-top: 52px; border-top: 1px solid var(--line); }
+  .tl { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px 40px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+  .tl h3 { font-family: var(--serif); font-weight: 400; font-size: 1.9rem; line-height: 1.1; }
+  .tl .where { margin-top: 4px; color: var(--ink); }
+  .tl p.note { color: var(--muted); margin-top: 8px; max-width: 58ch; font-size: 0.98rem; }
 
   /* contact */
-  .contact p { max-width: 58ch; }
-  .contact .mail { font-family: var(--head); font-weight: 600; font-size: 1.35rem; word-break: break-all; }
-  .contact .links { display: flex; gap: 10px 22px; flex-wrap: wrap; margin-top: 18px; font-family: var(--head); font-weight: 500; }
-  .contact address { font-style: normal; color: var(--muted); margin-top: 18px; font-size: 0.97rem; }
+  .contact h2.title { max-width: 14ch; }
+  .mail { display: inline-block; margin-top: 32px; font-family: var(--serif); font-size: clamp(1.8rem, 4.4vw, 3.2rem); text-decoration: none; border-bottom: 2px solid var(--accent); line-height: 1.15; word-break: break-all; }
+  .mail:hover { color: var(--accent); }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .addr { margin-top: 28px; color: var(--muted); font-style: normal; }
 
-  footer { padding: 48px 0 24px; color: var(--muted); font-size: 0.9rem; }
+  footer { margin-top: clamp(72px, 10vw, 120px); border-top: 1px solid var(--line); padding: 28px 0 40px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
-  /* small screens */
-  @media (max-width: 900px) {
-    .shell { grid-template-columns: 1fr; }
-    .rail {
-      position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center;
-      gap: 12px 20px; padding: 18px 20px; border-right: 0; border-bottom: 1px solid var(--line);
-    }
-    .rail .role { display: none; }
-    .rail nav { flex-direction: row; flex-wrap: wrap; gap: 2px 14px; width: 100%; order: 3; }
-    .rail nav a { padding: 4px 0; border-left: 0; border-bottom: 3px solid transparent; }
-    .rail nav a[aria-current="true"] { border-bottom-color: var(--lamp); }
-    .rail .foot { margin: 0 0 0 auto; }
-    main { padding-top: 32px; }
+  /* responsive */
+  @media (max-width: 920px) {
+    .hero-cols { grid-template-columns: 1fr; gap: 28px; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .portrait { max-width: 280px; }
+    .thread { grid-template-columns: 50px minmax(0, 1fr); }
+    .thread .t-body { grid-column: 2; }
+    .paper { grid-template-columns: 1fr; }
+    .tl { grid-template-columns: 1fr; gap: 6px; }
   }
-  @media (max-width: 560px) {
-    body { font-size: 17px; }
-    .paper, .news li { grid-template-columns: 1fr; gap: 2px; }
-    .meter { grid-template-columns: 1fr 52px; }
-    .meter .label { grid-column: 1 / -1; }
+  @media (max-width: 720px) {
+    .nav .wrap { height: auto; padding-top: 12px; padding-bottom: 12px; flex-wrap: wrap; }
+    .nav-right { width: 100%; justify-content: space-between; gap: 12px; }
+    .nav-links { gap: 16px; overflow-x: auto; }
+    .brand { font-size: 1.5rem; }
+    .latest li { grid-template-columns: 1fr; gap: 4px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
+    .strip-track { animation: none; }
     * { transition: none !important; }
   }
 </style>
 </head>
 <body>
-<div class="shell">
 
-  <header class="rail">
-    <div>
-      <a class="name" href="#top">Md. Sazedur Rahman</a>
-      <p class="role">PhD student, computer science<br>Missouri S&amp;T</p>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Md. Sazedur Rahman, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <line x1="16" y1="6" x2="6" y2="25" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="16" y1="6" x2="26" y2="25" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="6" y1="25" x2="26" y2="25" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="16" cy="6" r="3.4" fill="currentColor"/>
+        <circle cx="6" cy="25" r="3.4" fill="currentColor"/>
+        <circle cx="26" cy="25" r="3.8" fill="var(--accent)"/>
+      </svg>
+      Sazedur
+    </a>
+    <div class="nav-right">
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#papers">Papers</a>
+        <a href="#background">Background</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark theme">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg>
+      </button>
     </div>
-    <nav aria-label="Sections">
-      <a href="#research">Research</a>
-      <a href="#papers">Papers</a>
-      <a href="#news">News</a>
-      <a href="#background">Background</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="foot">
-      <a href="cv/MdSazedurRahman_CV.pdf">Download CV (PDF)</a>
-      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark theme">Dark theme</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-labelledby="h-name">
+    <canvas id="graph" aria-hidden="true"></canvas>
+    <div class="wrap hero-inner">
+      <div class="hero-top mono">
+        <span class="who">PhD student, computer science · Missouri S&amp;T</span>
+        <span>Rolla, Missouri</span>
+      </div>
+      <h1 class="big-name" id="h-name"><span>Md. Sazedur</span><span><em>Rahman</em></span></h1>
+      <hr class="hero-rule">
+      <div class="hero-cols">
+        <p class="lede">Federated learning breaks when some clients lie. I build defenses that <em>keep the model honest.</em></p>
+        <div class="hero-side">
+          <p>Security and privacy for cyber-physical systems, with a focus on poisoning attacks, robust aggregation and real data from underground mines.</p>
+          <div class="btns">
+            <a class="btn solid" href="#papers">Selected work <span aria-hidden="true">&rarr;</span></a>
+            <a class="btn" href="cv/MdSazedurRahman_CV.pdf">CV <span aria-hidden="true">&darr;</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="status">
+        <span id="statusText" aria-live="polite"><b>round 000</b> · 0 of 0 clients poisoned</span>
+        <span class="controls">
+          <span>Click a node to poison it. Click empty space to add a client.</span>
+          <button class="chip-btn" id="poisonBtn" type="button">Poison a client</button>
+          <button class="chip-btn" id="resetBtn" type="button">Reset</button>
+        </span>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main id="top">
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <span>ACM DEBS <i>●</i> COMSNETS <i>●</i> IEEE MASS <i>●</i> BigDML <i>●</i> </span>
+      <span>ACM DEBS <i>●</i> COMSNETS <i>●</i> IEEE MASS <i>●</i> BigDML <i>●</i> </span>
+      <span>ACM DEBS <i>●</i> COMSNETS <i>●</i> IEEE MASS <i>●</i> BigDML <i>●</i> </span>
+      <span>ACM DEBS <i>●</i> COMSNETS <i>●</i> IEEE MASS <i>●</i> BigDML <i>●</i> </span>
+    </div>
+  </div>
 
-    <section class="hero" aria-labelledby="h-hero">
-      <h1 id="h-hero">Federated learning that keeps working when some clients send bad updates.</h1>
-      <p class="lede">I'm a PhD student at Missouri S&amp;T. I design defenses against <strong>poisoning attacks in federated learning</strong> and test them on real data from underground mines, where a corrupted model can put people at risk.</p>
-
-      <figure class="sim" id="sim">
-        <div class="sim-top">
-          <span class="title">Eight mine sensors train one shared model</span>
-          <span class="round" id="roundLabel" aria-live="polite">Round 0</span>
+  <section class="block" id="about" aria-labelledby="h-about">
+    <div class="wrap">
+      <div class="sec-label mono"><b>01</b><span>About</span></div>
+      <h2 class="title" id="h-about">Models that learn from many devices need to know who to trust.</h2>
+      <div class="about-grid" id="aboutGrid">
+        <figure class="portrait">
+          <img src="images/mypic.jpg" alt="Portrait of Md. Sazedur Rahman" onerror="this.closest('.about-grid').classList.add('no-photo'); this.closest('.portrait').hidden = true;">
+        </figure>
+        <div>
+          <p class="about-text">In federated learning, many devices train one model together. If a few of them are faulty or hostile, the whole model suffers. I look for the updates that don't fit and <em>turn their influence down,</em> so the model stays reliable in places like <em>underground mines,</em> where mistakes cost more.</p>
         </div>
-        <svg id="simSvg" viewBox="0 0 560 460" role="group" aria-label="Federated learning simulation: eight clients send updates to one server"></svg>
-        <div class="meters">
-          <div class="meter plain">
-            <span class="label">Plain averaging</span>
-            <div class="track"><div class="fill" id="fillPlain"></div></div>
-            <span class="pct" id="pctPlain">0%</span>
-          </div>
-          <div class="meter trust">
-            <span class="label">Trust-weighted</span>
-            <div class="track"><div class="fill" id="fillTrust"></div></div>
-            <span class="pct" id="pctTrust">0%</span>
-          </div>
-        </div>
-        <figcaption>Share of the shared model's update that comes from poisoned clients. Click a client to switch it between honest and poisoned. Plain averaging gives every client an equal say. Trust-weighted aggregation lowers the weight of clients whose updates look wrong. This is an illustration of the idea, not a result from my papers.</figcaption>
-        <button class="reset" id="resetBtn" type="button">Reset clients</button>
-      </figure>
-    </section>
+      </div>
+      <dl class="facts">
+        <div><dt class="mono">Now</dt><dd>PhD student, computer science, Missouri S&amp;T. W2C Lab.</dd></div>
+        <div><dt class="mono">Focus</dt><dd>Federated learning security, robust aggregation, trustworthy AI.</dd></div>
+        <div><dt class="mono">Data</dt><dd>Real underground mine data, including a custom dataset of mine signs.</dd></div>
+        <div><dt class="mono">Also</dt><dd>Full stack and Android developer, competitive programmer.</dd></div>
+      </dl>
+      <div class="latest">
+        <div class="mono">Latest</div>
+        <!-- Add new items at the top, with the real month when you have it. -->
+        <ul>
+          <li><span class="mono">2026</span><span>Paper on label-flip attack detection with trust-weighted aggregation accepted at ACM DEBS 2026.</span></li>
+          <li><span class="mono">2026</span><span>Paper on learning for safety and security in future mining accepted at COMSNETS 2026.</span></li>
+          <li><span class="mono">2025</span><span>Paper on detecting untargeted attacks in federated learning for underground mines presented at IEEE MASS 2025.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <section id="research" aria-labelledby="h-research">
-      <h2 id="h-research">What I work on</h2>
+  <section class="block" id="research" aria-labelledby="h-research">
+    <div class="wrap">
+      <div class="sec-label mono"><b>02</b><span>Research</span></div>
+      <h2 class="title" id="h-research">Three ways to keep a shared model <em>honest.</em></h2>
+      <p class="sec-intro">Each line of work starts from the same question: what happens to the model when some of the data or devices can't be trusted?</p>
       <div class="threads">
         <article class="thread">
+          <span class="letter" aria-hidden="true">A</span>
           <h3>Defending against poisoning attacks</h3>
-          <p>A few compromised or faulty clients can flip labels, flip gradient signs or add noise, and drag the shared model off course. I build aggregation methods that score how trustworthy each client's updates are and shrink the influence of the ones that are not.</p>
-          <p class="see">Papers: label-flip detection with trust-weighted aggregation (ACM DEBS 2026) and untargeted attack detection (IEEE MASS 2025).</p>
+          <div class="t-body">
+            <p>Compromised clients can flip labels, flip gradient signs or add noise to drag the shared model off course. My methods score how trustworthy each client's updates are and shrink the influence of the ones that are not.</p>
+            <div class="tags"><span class="tag">label-flip</span><span class="tag">sign-flip</span><span class="tag">additive noise</span><span class="tag">trust-weighted aggregation</span></div>
+          </div>
         </article>
         <article class="thread">
+          <span class="letter" aria-hidden="true">B</span>
           <h3>Learning from real underground mine data</h3>
-          <p>Mines are a hard setting: sensors are spread out, connections are unreliable, and mistakes are costly. I evaluate my methods on mine data, including a custom dataset of mine signs I built for this work, so the results reflect real deployment conditions.</p>
-          <p class="see">Papers: trust-weighted aggregation and the future-mining vision paper (COMSNETS 2026).</p>
+          <div class="t-body">
+            <p>Mines are hard to work in. Sensors are spread out, connections are unreliable and mistakes are costly. I test my methods on mine data, including a custom dataset of mine signs I built for this work, so results reflect real conditions.</p>
+            <div class="tags"><span class="tag">underground mining</span><span class="tag">unreliable updates</span><span class="tag">safety-critical</span></div>
+          </div>
         </article>
         <article class="thread">
-          <h3>Trustworthy AI for safety-critical systems</h3>
-          <p>The same questions come up wherever many devices feed one model: connected and autonomous vehicles, sensor networks and distributed systems. I work on spotting malicious sensors and abnormal data before they reach the model.</p>
-          <p class="see">Paper: CAV-AD, anomaly and malicious-sensor detection in vehicle networks (IEEE MASS 2024).</p>
+          <span class="letter" aria-hidden="true">C</span>
+          <h3>Trustworthy AI for connected systems</h3>
+          <div class="t-body">
+            <p>The same problem shows up wherever many devices feed one model, such as connected vehicles and sensor networks. I work on spotting malicious sensors and abnormal data before they reach the model.</p>
+            <div class="tags"><span class="tag">anomaly detection</span><span class="tag">malicious sensors</span><span class="tag">CAV networks</span></div>
+          </div>
         </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="papers" aria-labelledby="h-papers">
-      <h2 id="h-papers">Papers</h2>
-      <!-- To add a paper link, add: <a href="URL">Paper</a> inside that paper's .links paragraph. -->
+  <section class="block" id="papers" aria-labelledby="h-papers">
+    <div class="wrap">
+      <div class="sec-label mono"><b>03</b><span>Papers</span></div>
+      <h2 class="title" id="h-papers">Papers, <em>newest first.</em></h2>
+      <!-- To add a paper link, add: <a class="btn" href="URL">Paper</a> inside that paper's .actions div. -->
       <ol class="papers">
         <li class="paper">
-          <span class="when">2026</span>
+          <span class="yr">2026</span>
           <div>
+            <div class="mono venue">ACM DEBS 2026</div>
             <h3>Label-Flip Attack Detection via Trust-Weighted Aggregation in Federated Learning for Underground Mine Security</h3>
-            <p class="venue">ACM DEBS 2026</p>
             <p class="authors"><b>Md. Sazedur Rahman</b>, Sanjay Madria, Samuel Frimpong</p>
-            <p class="summary">A trust-weighted federated learning defense that detects and limits label-flip attacks in underground mining environments.</p>
-            <p class="links"><a href="https://github.com/sazed49/DEBS_2026">Code</a></p>
+            <p class="sum">A trust-weighted federated learning defense that detects and limits label-flip attacks in underground mining environments.</p>
           </div>
+          <div class="actions"><a class="btn" href="https://github.com/sazed49/DEBS_2026">Code</a></div>
         </li>
         <li class="paper">
-          <span class="when">2026</span>
+          <span class="yr">2026</span>
           <div>
+            <div class="mono venue">COMSNETS 2026</div>
             <h3>Future Mining: Learning for Safety and Security</h3>
-            <p class="venue">COMSNETS 2026</p>
             <p class="authors"><b>Md. Sazedur Rahman</b>, M. R. Jewel, Sanjay Madria</p>
-            <p class="summary">A look at how learning-based methods can improve safety, security and day-to-day operations in future mines.</p>
+            <p class="sum">A look at how learning-based methods can improve safety, security and day-to-day operations in future mines.</p>
           </div>
+          <div class="actions"></div>
         </li>
         <li class="paper">
-          <span class="when">2025</span>
+          <span class="yr">2025</span>
           <div>
+            <div class="mono venue">IEEE MASS 2025</div>
             <h3>Detecting Untargeted Attacks and Mitigating Unreliable Updates in Federated Learning for Underground Mining Operations</h3>
-            <p class="venue">IEEE MASS 2025</p>
             <p class="authors"><b>Md. Sazedur Rahman</b>, Mohamed Elmahallawy, Sanjay Madria, Samuel Frimpong</p>
-            <p class="summary">A robust federated learning framework that detects untargeted attacks and reduces the influence of unreliable client updates.</p>
+            <p class="sum">A robust federated learning framework that detects untargeted attacks and reduces the influence of unreliable client updates.</p>
           </div>
+          <div class="actions"></div>
         </li>
         <li class="paper">
-          <span class="when">2024</span>
+          <span class="yr">2024</span>
           <div>
+            <div class="mono venue">IEEE MASS 2024</div>
             <h3>CAV-AD: A Robust Framework for Detection of Anomalous Data and Malicious Sensors in CAV Networks</h3>
-            <p class="venue">IEEE MASS 2024</p>
             <p class="authors"><b>Md. Sazedur Rahman</b>, Mohamed Elmahallawy, Sanjay Madria, Samuel Frimpong</p>
-            <p class="summary">An anomaly-detection framework that finds malicious sensors and abnormal data in connected and autonomous vehicle networks.</p>
+            <p class="sum">An anomaly-detection framework that finds malicious sensors and abnormal data in connected and autonomous vehicle networks.</p>
           </div>
+          <div class="actions"></div>
         </li>
         <li class="paper">
-          <span class="when">2024</span>
+          <span class="yr">2024</span>
           <div>
+            <div class="mono venue">BigDML 2024</div>
             <h3>Computing Skyline Query on Incomplete Data</h3>
-            <p class="venue">BigDML 2024</p>
             <p class="authors"><b>Md. Sazedur Rahman</b>, KMA Hasan</p>
-            <p class="summary">Efficient skyline-query processing for datasets with missing values.</p>
+            <p class="sum">Efficient skyline-query processing for datasets with missing values.</p>
           </div>
+          <div class="actions"></div>
         </li>
       </ol>
-    </section>
+    </div>
+  </section>
 
-    <section id="news" aria-labelledby="h-news">
-      <h2 id="h-news">News</h2>
-      <!-- Add new items at the top. Use the real date when you have it. -->
-      <ul class="news">
-        <li><span class="when">2026</span><span>Paper on label-flip attack detection with trust-weighted aggregation accepted at ACM DEBS 2026.</span></li>
-        <li><span class="when">2026</span><span>Paper on learning for safety and security in future mining accepted at COMSNETS 2026.</span></li>
-        <li><span class="when">2025</span><span>Paper on detecting untargeted attacks in federated learning for underground mines presented at IEEE MASS 2025.</span></li>
-        <li><span class="when">2024</span><span>CAV-AD presented at IEEE MASS 2024.</span></li>
-      </ul>
-    </section>
-
-    <section id="background" aria-labelledby="h-background">
-      <h2 id="h-background">Background</h2>
-      <div class="bg-grid">
-        <div>
-          <h3>PhD, computer science</h3>
-          <p>Missouri S&amp;T, Rolla, Missouri</p>
-          <p class="sub">W2C Lab. Research on security and privacy in cyber-physical systems.</p>
+  <section class="block" id="background" aria-labelledby="h-bg">
+    <div class="wrap">
+      <div class="sec-label mono"><b>04</b><span>Background</span></div>
+      <h2 class="title" id="h-bg">From Khulna to <em>Rolla.</em></h2>
+      <div class="timeline">
+        <div class="tl">
+          <span class="mono">Now</span>
+          <div>
+            <h3>PhD, computer science</h3>
+            <p class="where">Missouri S&amp;T, Rolla, Missouri. W2C Lab.</p>
+            <p class="note">Research on security and privacy in cyber-physical systems, with a focus on federated learning and robust aggregation for underground mining.</p>
+          </div>
         </div>
-        <div>
-          <h3>B.Sc., computer science and engineering</h3>
-          <p>Khulna University of Engineering &amp; Technology</p>
-          <p class="sub">Batch of 2018 to 2022.</p>
+        <div class="tl">
+          <span class="mono">2018 to 2022</span>
+          <div>
+            <h3>B.Sc., computer science and engineering</h3>
+            <p class="where">Khulna University of Engineering &amp; Technology, Bangladesh.</p>
+          </div>
         </div>
-        <div>
-          <h3>Also</h3>
-          <p>Full stack and Android developer, and competitive programmer.</p>
-          <p class="sub">Code and projects are on <a href="https://github.com/sazed49">GitHub</a>.</p>
-        </div>
-        <div>
-          <h3>Works with</h3>
-          <p>Sanjay Madria, Samuel Frimpong and Mohamed Elmahallawy.</p>
+        <div class="tl">
+          <span class="mono">Alongside</span>
+          <div>
+            <h3>Developer and competitive programmer</h3>
+            <p class="where">Full stack and Android development.</p>
+            <p class="note">Code and projects are on <a href="https://github.com/sazed49">GitHub</a>.</p>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="contact" class="contact" aria-labelledby="h-contact">
-      <h2 id="h-contact">Contact</h2>
-      <p>I'm happy to talk about federated learning security, mining applications and collaborations.</p>
+  <section class="block contact" id="contact" aria-labelledby="h-contact">
+    <div class="wrap">
+      <div class="sec-label mono"><b>05</b><span>Contact</span></div>
+      <h2 class="title" id="h-contact">Training across clients you <em>can't fully trust?</em></h2>
+      <p class="sec-intro">I'm happy to talk about federated learning security, mining applications and collaborations.</p>
       <a class="mail" href="mailto:mrvfw@umsystem.edu">mrvfw@umsystem.edu</a>
-      <div class="links">
-        <a href="https://github.com/sazed49">GitHub</a>
-        <a href="https://www.linkedin.com/in/md-sazedur-rahman-3804a723a/">LinkedIn</a>
-        <a href="cv/MdSazedurRahman_CV.pdf">CV (PDF)</a>
+      <div class="contact-links">
+        <a class="btn" href="https://github.com/sazed49">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/md-sazedur-rahman-3804a723a/">LinkedIn</a>
+        <a class="btn" href="cv/MdSazedurRahman_CV.pdf">CV <span aria-hidden="true">&darr;</span></a>
       </div>
-      <address>W2C Lab, Missouri S&amp;T, Rolla, Missouri, USA</address>
-    </section>
+      <address class="addr">W2C Lab, Missouri S&amp;T, Rolla, Missouri, USA</address>
+    </div>
+  </section>
 
-    <footer>
-      <span>&copy; 2026 Md. Sazedur Rahman. Last updated November 2026.</span>
-    </footer>
-  </main>
-</div>
+</main>
+
+<footer>
+  <div class="wrap mono">
+    <span>&copy; 2026 Md. Sazedur Rahman</span>
+    <span>Updated November 2026</span>
+  </div>
+</footer>
 
 <script>
 (function () {
   /* ---------- theme ---------- */
   var root = document.documentElement;
-  var btn = document.getElementById('themeBtn');
+  var colors = {};
+  function readColors() {
+    var s = getComputedStyle(root);
+    colors.ink = s.getPropertyValue('--ink').trim();
+    colors.accent = s.getPropertyValue('--accent').trim();
+    colors.bg = s.getPropertyValue('--bg').trim();
+  }
   function systemTheme() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
   var saved = null;
   try { saved = localStorage.getItem('theme'); } catch (e) {}
-  function applyTheme(t) {
-    root.setAttribute('data-theme', t);
-    btn.textContent = t === 'dark' ? 'Light theme' : 'Dark theme';
-  }
+  function applyTheme(t) { root.setAttribute('data-theme', t); readColors(); }
   applyTheme(saved || systemTheme());
-  btn.addEventListener('click', function () {
+  document.getElementById('themeBtn').addEventListener('click', function () {
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     applyTheme(next);
     try { localStorage.setItem('theme', next); } catch (e) {}
   });
 
   /* ---------- active section in nav ---------- */
-  var links = Array.prototype.slice.call(document.querySelectorAll('.rail nav a'));
-  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -402,124 +489,141 @@
           });
         }
       });
-    }, { rootMargin: '-30% 0px -60% 0px' });
-    targets.forEach(function (t) { if (t) io.observe(t); });
-  }
-
-  /* ---------- federated learning illustration ---------- */
-  var NS = 'http://www.w3.org/2000/svg';
-  var svg = document.getElementById('simSvg');
-  var N = 8, CX = 280, CY = 230, R = 168;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var round = 0, timer = null;
-  var clients = [];
-
-  function el(name, attrs, parent) {
-    var n = document.createElementNS(NS, name);
-    for (var k in attrs) n.setAttribute(k, attrs[k]);
-    if (parent) parent.appendChild(n);
-    return n;
-  }
-
-  var linesG = el('g', {}, svg);
-  var dotsG = el('g', {}, svg);
-  var clientsG = el('g', {}, svg);
-
-  for (var i = 0; i < N; i++) {
-    var a = -Math.PI / 2 + i * 2 * Math.PI / N;
-    var c = { x: CX + R * Math.cos(a), y: CY + R * Math.sin(a), bad: false, w: 1, t: i / N };
-    c.line = el('line', { x1: c.x, y1: c.y, x2: CX, y2: CY, 'class': 'line' }, linesG);
-    c.dot = el('circle', { r: 4, 'class': 'dot' }, dotsG);
-    c.g = el('g', { 'class': 'client', tabindex: 0, role: 'button' }, clientsG);
-    c.disc = el('circle', { cx: c.x, cy: c.y, r: 24, 'class': 'disc' }, c.g);
-    var tx = el('text', { x: c.x, y: c.y }, c.g);
-    tx.textContent = 'C' + (i + 1);
-    clients.push(c);
-    (function (c, i) {
-      c.g.addEventListener('click', function () { toggle(c); });
-      c.g.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(c); }
-      });
-    })(c, i);
-  }
-  var serverG = el('g', { 'class': 'server' }, svg);
-  el('circle', { cx: CX, cy: CY, r: 38, 'class': 'disc' }, serverG);
-  var st = el('text', { x: CX, y: CY }, serverG);
-  st.textContent = 'Server';
-
-  function label(c, i) {
-    return 'Client ' + (i + 1) + ', ' + (c.bad ? 'poisoned' : 'honest') + '. Press to make it ' + (c.bad ? 'honest' : 'poisoned') + '.';
-  }
-
-  function render() {
-    var nBad = 0, sumAll = 0, sumBad = 0;
-    clients.forEach(function (c, i) {
-      if (c.bad) nBad++;
-      sumAll += c.w;
-      if (c.bad) sumBad += c.w;
-      c.line.setAttribute('stroke-width', (1 + c.w * 5).toFixed(2));
-      c.line.setAttribute('stroke-opacity', (0.25 + c.w * 0.6).toFixed(2));
-      c.line.style.stroke = c.bad ? 'var(--poison)' : '';
-      c.g.setAttribute('class', 'client' + (c.bad ? ' bad' : ''));
-      c.g.setAttribute('aria-pressed', c.bad ? 'true' : 'false');
-      c.g.setAttribute('aria-label', label(c, i));
-      c.dot.setAttribute('class', 'dot' + (c.bad ? ' bad' : ''));
-      c.dot.setAttribute('r', (2 + c.w * 3.5).toFixed(2));
-      if (reduce) {
-        c.dot.setAttribute('cx', c.x); c.dot.setAttribute('cy', c.y);
-        c.dot.style.display = 'none';
-      }
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    links.forEach(function (a) {
+      var t = document.querySelector(a.getAttribute('href'));
+      if (t) io.observe(t);
     });
-    var plain = nBad / N * 100;
-    var trust = sumAll > 0 ? sumBad / sumAll * 100 : 0;
-    document.getElementById('fillPlain').style.width = plain + '%';
-    document.getElementById('fillTrust').style.width = trust + '%';
-    document.getElementById('pctPlain').textContent = Math.round(plain) + '%';
-    document.getElementById('pctTrust').textContent = (trust < 1 && trust > 0 ? '<1' : Math.round(trust)) + '%';
-    document.getElementById('roundLabel').textContent = 'Round ' + round;
+  }
+
+  /* ---------- hero graph: a federated network where clients can be poisoned ---------- */
+  var canvas = document.getElementById('graph');
+  var ctx = canvas.getContext('2d');
+  var hero = canvas.parentElement;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = 0, H = 0, dpr = 1;
+  var nodes = [], round = 0, timer = null;
+  var MAX_NODES = 70;
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function makeNode(x, y, bad) {
+    return { x: x, y: y, vx: reduce ? 0 : rand(-0.012, 0.012), vy: reduce ? 0 : rand(-0.012, 0.012), bad: !!bad, w: 1, r: rand(2.2, 3.8) };
+  }
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  function seed() {
+    nodes = [];
+    var count = W < 700 ? 22 : 40;
+    for (var i = 0; i < count; i++) nodes.push(makeNode(Math.random(), Math.random() * 0.92, false));
+    [3, 11, 19].forEach(function (i) { if (nodes[i]) nodes[i].bad = true; });
+    round = 0;
+  }
+
+  function linkDist() { return Math.max(150, Math.min(W, 1200) * 0.17); }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    var D = linkDist(), i, j, a, b, dx, dy, d, al;
+    ctx.lineWidth = 1;
+    for (i = 0; i < nodes.length; i++) {
+      a = nodes[i];
+      for (j = i + 1; j < nodes.length; j++) {
+        b = nodes[j];
+        dx = (a.x - b.x) * W; dy = (a.y - b.y) * H; d = Math.sqrt(dx * dx + dy * dy);
+        if (d < D) {
+          al = (1 - d / D) * 0.28 * Math.min(a.w, b.w);
+          ctx.globalAlpha = al;
+          ctx.strokeStyle = (a.bad || b.bad) ? colors.accent : colors.ink;
+          ctx.beginPath(); ctx.moveTo(a.x * W, a.y * H); ctx.lineTo(b.x * W, b.y * H); ctx.stroke();
+        }
+      }
+    }
+    for (i = 0; i < nodes.length; i++) {
+      a = nodes[i];
+      ctx.globalAlpha = a.bad ? 1 : 0.55;
+      ctx.fillStyle = a.bad ? colors.accent : colors.ink;
+      ctx.beginPath(); ctx.arc(a.x * W, a.y * H, a.bad ? 4.5 : a.r, 0, Math.PI * 2); ctx.fill();
+      if (a.bad) {
+        ctx.globalAlpha = 0.35 * (1 - a.w * 0.6);
+        ctx.strokeStyle = colors.accent; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(a.x * W, a.y * H, 10, 0, Math.PI * 2); ctx.stroke();
+        ctx.lineWidth = 1;
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function pad(n, len) { n = String(n); while (n.length < len) n = '0' + n; return n; }
+  function pct(x) { return x > 0 && x < 1 ? '<1%' : Math.round(x) + '%'; }
+  function updateStatus() {
+    var nBad = 0, sumAll = 0, sumBad = 0;
+    nodes.forEach(function (n) { if (n.bad) { nBad++; sumBad += n.w; } sumAll += n.w; });
+    var plain = nodes.length ? nBad / nodes.length * 100 : 0;
+    var trust = sumAll ? sumBad / sumAll * 100 : 0;
+    document.getElementById('statusText').innerHTML =
+      '<b>round ' + pad(round, 3) + '</b> · ' + nBad + ' of ' + nodes.length + ' clients poisoned · plain averaging ' + pct(plain) + ' · trust-weighted ' + pct(trust);
   }
 
   function step() {
     var settled = true;
-    clients.forEach(function (c) {
-      var target = c.bad ? 0.04 : 1;
-      c.w = c.bad ? c.w * 0.6 : c.w + (1 - c.w) * 0.45;
-      if (Math.abs(c.w - target) < 0.012) c.w = target; else settled = false;
+    nodes.forEach(function (n) {
+      var target = n.bad ? 0.04 : 1;
+      n.w = n.bad ? n.w * 0.62 : n.w + (1 - n.w) * 0.45;
+      if (Math.abs(n.w - target) < 0.012) n.w = target; else settled = false;
     });
     round++;
     return settled;
   }
-
   function kick() {
     if (timer) return;
     timer = setInterval(function () {
       var done = step();
-      render();
+      updateStatus(); draw();
       if (done) { clearInterval(timer); timer = null; }
     }, 450);
   }
 
-  function toggle(c) { c.bad = !c.bad; kick(); render(); }
-
   function reset() {
-    clients.forEach(function (c, i) { c.bad = (i === 2 || i === 5); c.w = 1; });
-    round = 0;
     if (timer) { clearInterval(timer); timer = null; }
-    render();
-    kick();
+    seed(); updateStatus(); draw(); kick();
   }
+
+  canvas.addEventListener('click', function (e) {
+    var r = canvas.getBoundingClientRect();
+    var px = e.clientX - r.left, py = e.clientY - r.top;
+    var hit = null, best = 30, i, d;
+    for (i = 0; i < nodes.length; i++) {
+      d = Math.hypot(nodes[i].x * W - px, nodes[i].y * H - py);
+      if (d < best) { best = d; hit = nodes[i]; }
+    }
+    if (hit) { hit.bad = !hit.bad; }
+    else if (nodes.length < MAX_NODES) { nodes.push(makeNode(px / W, py / H, false)); }
+    updateStatus(); draw(); kick();
+  });
+  document.getElementById('poisonBtn').addEventListener('click', function () {
+    var good = nodes.filter(function (n) { return !n.bad; });
+    if (!good.length) return;
+    good[Math.floor(Math.random() * good.length)].bad = true;
+    updateStatus(); draw(); kick();
+  });
   document.getElementById('resetBtn').addEventListener('click', reset);
 
-  /* update dots travelling from each client to the server */
+  /* gentle drift */
   var last = performance.now();
   function frame(now) {
-    var dt = Math.min(0.05, (now - last) / 1000);
-    last = now;
-    clients.forEach(function (c) {
-      c.t = (c.t + dt * 0.35) % 1;
-      c.dot.setAttribute('cx', (c.x + (CX - c.x) * c.t).toFixed(1));
-      c.dot.setAttribute('cy', (c.y + (CY - c.y) * c.t).toFixed(1));
+    var dt = Math.min(50, now - last); last = now;
+    nodes.forEach(function (n) {
+      n.x += n.vx * dt / 16; n.y += n.vy * dt / 16;
+      if (n.x < -0.02 || n.x > 1.02) n.vx *= -1;
+      if (n.y < 0 || n.y > 0.95) n.vy *= -1;
     });
+    draw();
     if (!document.hidden) requestAnimationFrame(frame); else waitVisible();
   }
   function waitVisible() {
@@ -528,9 +632,17 @@
     };
     document.addEventListener('visibilitychange', h);
   }
-  if (!reduce) requestAnimationFrame(frame);
 
-  reset();
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 120);
+  });
+  new MutationObserver(function () { readColors(); draw(); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+
+  resize();
+  seed(); updateStatus(); draw(); kick();
+  if (!reduce) requestAnimationFrame(frame);
 })();
 </script>
 </body>
