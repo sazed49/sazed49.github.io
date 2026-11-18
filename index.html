@@ -370,10 +370,10 @@
   </style>
 </head>
 
-<body>
+<body id="top">
   <header class="site-header">
     <div class="container nav-wrap">
-      <a class="brand" href="index.html" aria-label="Md. Sazedur Rahman home">
+      <a class="brand" href="#top" aria-label="Md. Sazedur Rahman home">
         <span class="brand-mark">SR</span>
         <span class="brand-text">
           <span>Md. Sazedur Rahman</span>
@@ -386,12 +386,13 @@
       </button>
 
       <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a class="active" href="#about">About</a>
+        <a href="#about">About</a>
         <a href="#research">Research</a>
-        <a href="publication.html">Publications</a>
-        <a href="projects.html">Projects</a>
+        <a href="#publications">Publications</a>
+        <a href="#projects">Projects</a>
         <a href="#updates">News</a>
-        <a class="nav-cv" href="cv/MdSazedurRahman_CV.pdf" target="_blank" rel="noopener">CV <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cv" href="#cv">CV</a>
       </nav>
     </div>
   </header>
@@ -407,7 +408,7 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#research">Explore my research <i class="fa-solid fa-arrow-down"></i></a>
-            <a class="button" href="publication.html">View publications</a>
+            <a class="button" href="#publications">View publications</a>
           </div>
           <div class="hero-social">
             <a href="https://github.com/sazed49" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i>GitHub</a>
@@ -476,7 +477,7 @@
             <div class="research-icon"><i class="fa-solid fa-shield-halved"></i></div>
             <h3>Secure Federated Learning</h3>
             <p>Trust-weighted aggregation and detection methods for label-flip, sign-flip, additive-noise, intermittent, and unreliable-client behaviors.</p>
-            <a href="projects.html">Related projects <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#projects">Related projects <i class="fa-solid fa-arrow-right"></i></a>
           </article>
 
           <article class="research-card">
@@ -484,7 +485,7 @@
             <div class="research-icon"><i class="fa-solid fa-helmet-safety"></i></div>
             <h3>AI for Underground Mining</h3>
             <p>Safety-sign recognition, situational awareness, and robust perception using MineSigns and other real and synthetic mining datasets.</p>
-            <a href="projects.html">Related projects <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#projects">Related projects <i class="fa-solid fa-arrow-right"></i></a>
           </article>
 
           <article class="research-card">
@@ -492,19 +493,23 @@
             <div class="research-icon"><i class="fa-solid fa-network-wired"></i></div>
             <h3>Trustworthy Cyber-Physical Systems</h3>
             <p>Anomaly detection, malicious-sensor identification, privacy, and resilient collaboration across vehicles, robots, and IoT devices.</p>
-            <a href="projects.html">Related projects <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#projects">Related projects <i class="fa-solid fa-arrow-right"></i></a>
           </article>
         </div>
       </div>
     </section>
 
+    <section class="section section-white" id="projects"><div class="container">
+      <h2 class="section-title">Projects</h2>
+      <article class="publication"><span class="pub-year">01</span><div><h3>TrustFed-LFD</h3><p>A federated learning defense that limits the influence of client updates associated with label flipping.</p></div></article>
+      <article class="publication"><span class="pub-year">02</span><div><h3>MineSigns Dataset</h3><p>Video collected in an underground mine and annotated across 13 safety-sign classes for perception research.</p></div></article>
+    </div></section>
     <section class="section section-white" id="publications">
       <div class="container publications-layout">
         <div class="publications-sticky">
-          <span class="eyebrow">Selected work</span>
-          <h2 class="section-title">Recent publications.</h2>
+          <span class="eyebrow">Publication record</span>
+          <h2 class="section-title">Publications.</h2>
           <p>Selected peer-reviewed work in federated learning security, intelligent mining, and connected systems.</p>
-          <a class="button" href="publication.html">All publications <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
         <div class="publication-list">
@@ -535,6 +540,12 @@
               <p><strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy, Sanjay Madria, Samuel Frimpong</p>
             </div>
           </article>
+<article class="publication"><span class="pub-year">2024</span><div><div class="pub-venue">International Conference on Computing and Communication Networks · pp. 535–547 · 2024</div><h3>Detection of Coal Miner with a Comprehensive Dataset Using Transfer Learning Techniques</h3><p><strong>Md. Sazedur Rahman</strong>, K. Hoque, M. B. Hossain, D. Das, T. Wu</p></div></article>
+<article class="publication"><span class="pub-year">2024</span><div><div class="pub-venue">IEEE 21st International Conference on Mobile Ad-Hoc and Smart Systems (MASS) · 2024</div><h3>CAV-AD: A Robust Framework for Detection of Anomalous Data and Malicious Sensors in CAV Networks</h3><p><strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy, Sanjay Madria, Samuel Frimpong</p></div></article>
+<article class="publication"><span class="pub-year">2024</span><div><div class="pub-venue">5th International Conference on Data Analytics &amp; Management (ICDAM) · 2024</div><h3>Enhancing Multi-Class Skin Lesion Classification: An Ensemble-Based Transfer Learning Approach</h3><p>SMMH Md Manirujjaman, Mahmudul Hoque, <strong>Md. Sazedur Rahman</strong>, Md. Zahim Hassan, et al.</p></div></article>
+<article class="publication"><span class="pub-year">2024</span><div><div class="pub-venue">2nd International Conference on Big Data, IoT and Machine Learning · 2024</div><h3>Computing Skyline Query on Incomplete Data</h3><p><strong>Md. Sazedur Rahman</strong>, KMA Hasan</p></div></article>
+<article class="publication"><span class="pub-year">2023</span><div><div class="pub-venue">International Conference on Innovations in Bio-Inspired Computing and Applications · 2023</div><h3>Vehicle-BD: A Benchmark Dataset of Bangladeshi Local Vehicles</h3><p><strong>Md. Sazedur Rahman</strong>, Md. Zahim Hassan, S. Ibtisum</p></div></article>
+<article class="publication"><span class="pub-year">2022</span><div><div class="pub-venue">4th International Conference on Sustainable Technologies for Industry 4.0 · 2022</div><h3>Bangladeshi Local Vehicle Recognition with a Comprehensive Dataset Using Transfer Learning Techniques</h3><p><strong>Md. Sazedur Rahman</strong>, M. Z. Hassan, S. N. Hossain, N. Masrur, J. Rabbi</p></div></article>
         </div>
       </div>
     </section>
@@ -560,6 +571,10 @@
       </div>
     </section>
 
+    <section class="section section-white" id="cv"><div class="container">
+      <h2 class="section-title">Academic CV</h2><p>PhD student in Computer Science, Missouri S&amp;T · Graduate Research Assistant, W2C Lab</p>
+      <a class="button primary" href="cv/MdSazedurRahman_CV.pdf" download>Download CV (PDF)</a>
+    </div></section>
     <section class="contact-section" id="contact">
       <div class="container contact-grid">
         <div>
