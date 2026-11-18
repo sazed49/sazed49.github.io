@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
+  <script>try { if (localStorage.getItem("sr-portfolio-theme") === "light") document.documentElement.dataset.theme = "light"; } catch {}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Md. Sazedur Rahman is a PhD student at Missouri S&T researching secure federated learning, trustworthy AI, and intelligent mining systems.">
   <title>Md. Sazedur Rahman | Researcher in Secure Federated Learning</title>
@@ -367,6 +368,19 @@
       html { scroll-behavior: auto; }
       * { transition: none !important; }
     }
+    .theme-toggle {min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:24px;background:var(--white);color:var(--navy);font:700 .85rem var(--sans);cursor:pointer;white-space:nowrap}
+    .theme-toggle:focus-visible {outline:3px solid var(--teal);outline-offset:3px}
+    html[data-theme="dark"] {color-scheme:dark;--navy:#e4f0f6;--navy-dark:#f2f8fa;--ink:#e0ecf1;--muted:#b0c3ce;--page:#0c1720;--white:#14232f;--blue-light:#192e3b;--line:#354956;--teal:#76dfd0;--teal-light:#173837}
+    [data-theme="dark"] .site-header {background:#101e29}
+    [data-theme="dark"] .hero {background:linear-gradient(125deg,#0c1720,#193439)}
+    [data-theme="dark"] :is(.nav-links a,.hero-lead,.about-copy p) {color:var(--ink)}
+    [data-theme="dark"] :is(.availability,.interest-tags span) {color:#a3ede2;border-color:#325958}
+    [data-theme="dark"] :is(.metrics,.contact-section,.portrait-note) {background:#102936;color:#f0f7fa}
+    [data-theme="dark"] .brand-mark {background:linear-gradient(135deg,#234257 58%,#22635d 58%);color:white}
+    [data-theme="dark"] .research-number {color:#344b59}
+    [data-theme="dark"] .contact-button {color:#09212b}
+    @media (min-width:781px) and (max-width:1100px) {.nav-links{gap:10px}.nav-wrap{gap:10px}}
+    @media (max-width:780px) {.nav-wrap{gap:8px}.theme-toggle{margin-left:auto}.nav-links{order:4}.brand-text{max-width:145px}}
   </style>
 </head>
 
@@ -381,6 +395,7 @@
         </span>
       </a>
 
+      <button class="theme-toggle" type="button" id="themeToggle">☀ Light</button>
       <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation" aria-expanded="false">
         <i class="fa-solid fa-bars" aria-hidden="true"></i>
       </button>
@@ -595,6 +610,19 @@
   </footer>
 
   <script>
+    const themeToggle = document.getElementById("themeToggle");
+    function syncThemeButton() {
+      const dark = document.documentElement.dataset.theme === "dark";
+      themeToggle.textContent = dark ? "☀ Light" : "☾ Dark";
+      themeToggle.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+    }
+    syncThemeButton();
+    themeToggle.addEventListener("click", () => {
+      const theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem("sr-portfolio-theme", theme); } catch {}
+      syncThemeButton();
+    });
     const menuButton = document.getElementById("menuButton");
     const navLinks = document.getElementById("navLinks");
 
