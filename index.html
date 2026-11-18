@@ -1,635 +1,537 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <title>Md. Sazedur Rahman</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio of Md. Sazedur Rahman - Developer, Researcher, Programmer" />
-  <link rel="shortcut icon" href="Images/icon.png" type="image/x-icon" />
-
-  <!-- Bootstrap + Icons + Font -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" />
-
-  <style>
-    :root{
-      --accent: #c218c2;     /* magenta-ish accent like the screenshot */
-      --text: #222;
-      --muted: #666;
-      --border: #e9ecef;
-      --bg: #ffffff;
-    }
-
-    html { scroll-behavior: smooth; }
-    body{
-      font-family: "Montserrat", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    /* Top nav (white, minimal) */
-    .topnav{
-      background:#fff;
-      border-bottom: 1px solid var(--border);
-    }
-    .topnav .navbar-brand{
-      font-weight:700;
-      color: var(--text) !important;
-      letter-spacing: .2px;
-    }
-    .topnav .nav-link{
-      color:#333 !important;
-      font-weight:500;
-      padding: .75rem .9rem !important;
-    }
-    .topnav .nav-link:hover{ color: var(--accent) !important; }
-    .topnav .nav-link.active{
-      color: var(--accent) !important;
-      font-weight:700;
-    }
-
-    /* Page container width similar to academic personal sites */
-    .page-wrap{
-      max-width: 1100px;
-    }
-
-    /* Hero heading */
-    .hero-title{
-      font-size: 44px;
-      font-weight: 700;
-      letter-spacing: .3px;
-      margin-top: 28px;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-    .hero-subtitle{
-      text-align:center;
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 22px;
-    }
-    .hero-subtitle a{
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .hero-subtitle a:hover{ text-decoration: underline; }
-
-    /* Main layout */
-    .content-block{
-      margin-top: 10px;
-    }
-    .lead-paragraph{
-      font-size: 14px;
-      line-height: 1.7;
-      color:#2b2b2b;
-    }
-    .lead-paragraph a{
-      color: var(--accent);
-      text-decoration: none;
-      font-weight:600;
-    }
-    .lead-paragraph a:hover{ text-decoration: underline; }
-
-    /* Right card (photo + contact) */
-    .profile-card{
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 14px;
-      background: #fff;
-    }
-    .profile-img{
-      width: 100%;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-    .contact-box{
-      margin-top: 10px;
-      font-size: 13px;
-      line-height: 1.6;
-      color:#222;
-      font-weight: 600;
-      white-space: pre-line;
-    }
-    .social{
-      margin-top: 10px;
-      display:flex;
-      gap: 10px;
-      align-items:center;
-      flex-wrap: wrap;
-    }
-    .social a{
-      color:#444;
-      font-size: 18px;
-      transition: .2s;
-    }
-    .social a:hover{ color: var(--accent); }
-
-    /* Section styling */
-    .section{
-      margin-top: 26px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .section h3{
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .section p, .section li{
-      font-size: 14px;
-      color:#2b2b2b;
-      line-height: 1.7;
-    }
-    .section ul{
-      margin-bottom: 0;
-    }
-
-    /* News list */
-    .news-item{
-      display:flex;
-      gap: 18px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .news-date{
-      min-width: 110px;
-      font-weight: 700;
-      color:#222;
-      font-size: 13px;
-    }
-    .news-text{
-      font-size: 14px;
-      color:#2b2b2b;
-    }
-
-    /* Footer minimal */
-    footer{
-      margin-top: 40px;
-      padding: 22px 0;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 13px;
-    }
-    footer a{
-      color: var(--accent);
-      text-decoration:none;
-      font-weight:600;
-    }
-    footer a:hover{ text-decoration: underline; }
-
-    /* Small tweaks */
-    @media (max-width: 991px){
-      .hero-title{ font-size: 36px; }
-    }
-    /* Selected Publications */
-/* Selected Work / Publications */
-
-.selected-work-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.selected-work-header h3 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  color: #182b3e;
-}
-
-.all-publications {
-  color: #155a8a;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.all-publications:hover {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.publication-item {
-  border-top: 1px solid #d8e0e8;
-  padding: 18px 0 20px;
-}
-
-.publication-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.publication-title {
-  font-size: 19px;
-  font-weight: 700;
-  color: #182b3e;
-  margin: 0;
-  line-height: 1.35;
-}
-
-.publication-venue {
-  font-size: 15px;
-  color: #718096;
-  white-space: nowrap;
-  padding-top: 2px;
-}
-
-.publication-description {
-  margin-top: 5px;
-  margin-bottom: 7px;
-  font-size: 15px;
-  color: #718096;
-  line-height: 1.6;
-}
-
-.publication-authors {
-  font-size: 13px;
-  color: #5f6f7f;
-  margin-bottom: 6px;
-}
-
-.publication-links a {
-  color: #155a8a;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  margin-right: 16px;
-}
-
-.publication-links a:hover {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-
-  .selected-work-header h3 {
-    font-size: 23px;
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Md. Sazedur Rahman | Secure federated learning for underground mines</title>
+<meta name="description" content="Md. Sazedur Rahman is a PhD student in computer science at Missouri S&T. He builds defenses against poisoning attacks in federated learning and tests them on real underground mine data.">
+<meta property="og:title" content="Md. Sazedur Rahman">
+<meta property="og:description" content="Federated learning that keeps working when some clients send bad updates.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e9edf0;
+    --surface: #f6f8f9;
+    --ink: #14212b;
+    --muted: #55646f;
+    --line: #c7d1d8;
+    --trust: #17708a;
+    --poison: #cf4a2a;
+    --lamp: #f1b83a;
+    --link: #0f5f78;
+    --head: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  }
+  :root[data-theme="dark"] {
+    --bg: #11181e;
+    --surface: #182129;
+    --ink: #e6edf1;
+    --muted: #9aabb7;
+    --line: #2b3944;
+    --trust: #4fc0dd;
+    --poison: #ff7a59;
+    --link: #6fd0e8;
   }
 
-  .publication-top {
-    display: block;
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
   }
+  a { color: var(--link); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--lamp); outline-offset: 3px; border-radius: 2px; }
+  h1, h2, h3 { font-family: var(--head); line-height: 1.15; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  p { margin: 0 0 1em; }
 
-  .publication-venue {
-    margin-top: 5px;
-    white-space: normal;
+  /* layout: rail + main */
+  .shell { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: 100vh; }
+  .rail {
+    position: sticky; top: 0; align-self: start; height: 100vh;
+    padding: 40px 28px; display: flex; flex-direction: column; gap: 28px;
+    border-right: 1px solid var(--line);
   }
-
-  .publication-title {
-    font-size: 17px;
+  .rail .name { font-family: var(--head); font-weight: 700; font-size: 1.25rem; line-height: 1.2; text-decoration: none; color: var(--ink); }
+  .rail .role { color: var(--muted); font-size: 0.95rem; margin-top: 6px; line-height: 1.45; }
+  .rail nav { display: flex; flex-direction: column; gap: 2px; }
+  .rail nav a {
+    font-family: var(--head); font-weight: 500; font-size: 1rem; color: var(--muted);
+    text-decoration: none; padding: 6px 0 6px 14px; border-left: 3px solid transparent;
   }
-
-  .publication-description {
-    font-size: 14px;
+  .rail nav a:hover { color: var(--ink); }
+  .rail nav a[aria-current="true"] { color: var(--ink); border-left-color: var(--lamp); }
+  .rail .foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .theme-btn {
+    font: 500 0.9rem var(--head); color: var(--ink); background: transparent;
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer;
   }
-}
+  .theme-btn:hover { border-color: var(--muted); }
 
+  main { padding: 56px clamp(20px, 5vw, 72px) 40px; max-width: 980px; }
+  section { padding: 56px 0 8px; }
+  section:first-child { padding-top: 0; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-bottom: 20px; }
 
-  </style>
+  /* hero */
+  .hero h1 { font-size: clamp(2.2rem, 5.2vw, 3.7rem); font-weight: 750; max-width: 16ch; letter-spacing: -0.025em; }
+  .lede { font-size: 1.2rem; max-width: 58ch; color: var(--muted); margin: 22px 0 32px; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .sim {
+    margin: 0; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 6px; padding: 16px 16px 20px;
+  }
+  .sim-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 0 4px 4px; }
+  .sim-top .title { font-family: var(--head); font-weight: 600; font-size: 1rem; }
+  .sim-top .round { font-family: var(--head); font-size: 0.95rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .sim svg { display: block; width: 100%; height: auto; max-height: 460px; }
+  .line { stroke: var(--trust); stroke-linecap: round; transition: stroke 0.3s; }
+  .client .disc { fill: var(--surface); stroke: var(--trust); stroke-width: 2.5; transition: stroke 0.3s, fill 0.3s; }
+  .client text { font: 600 13px var(--head); fill: var(--ink); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .client { cursor: pointer; }
+  .client.bad .disc { stroke: var(--poison); fill: color-mix(in srgb, var(--poison) 16%, var(--surface)); }
+  .client.bad .line-ref { stroke: var(--poison); }
+  .client:hover .disc { stroke-width: 4; }
+  .server .disc { fill: var(--ink); }
+  .server text { font: 600 13px var(--head); fill: var(--bg); text-anchor: middle; dominant-baseline: central; }
+  .dot { fill: var(--trust); }
+  .dot.bad { fill: var(--poison); }
+
+  .meters { display: grid; gap: 12px; margin: 14px 4px 10px; }
+  .meter { display: grid; grid-template-columns: 150px 1fr 56px; align-items: center; gap: 12px; font-family: var(--head); font-size: 0.95rem; }
+  .meter .track { height: 12px; background: var(--bg); border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
+  .meter .fill { height: 100%; width: 0; border-radius: 999px; transition: width 0.35s ease; }
+  .meter.plain .fill { background: var(--poison); }
+  .meter.trust .fill { background: var(--trust); }
+  .meter .pct { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .sim figcaption { font-size: 0.9rem; color: var(--muted); line-height: 1.5; margin: 6px 4px 0; }
+  .sim .reset {
+    font: 500 0.9rem var(--head); color: var(--ink); background: transparent; border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px; cursor: pointer; margin: 12px 4px 0;
+  }
+  .sim .reset:hover { border-color: var(--muted); }
+
+  /* research rows */
+  .threads { display: grid; gap: 0; }
+  .thread { padding: 24px 0 24px 22px; border-left: 3px solid var(--line); }
+  .thread:hover { border-left-color: var(--trust); }
+  .thread h3 { font-size: 1.3rem; margin-bottom: 8px; }
+  .thread p { max-width: 62ch; margin-bottom: 8px; }
+  .thread .see { font-family: var(--head); font-size: 0.95rem; color: var(--muted); margin: 0; }
+
+  /* papers */
+  .papers { list-style: none; margin: 0; padding: 0; }
+  .paper { display: grid; grid-template-columns: 76px 1fr; gap: 8px 20px; padding: 24px 0; border-top: 1px solid var(--line); }
+  .paper:last-child { border-bottom: 1px solid var(--line); }
+  .paper .when { font-family: var(--head); font-weight: 700; font-size: 1.15rem; color: var(--muted); }
+  .paper h3 { font-size: 1.2rem; line-height: 1.25; margin-bottom: 6px; }
+  .paper .venue { font-family: var(--head); font-weight: 600; font-size: 0.95rem; color: var(--trust); margin-bottom: 6px; }
+  .paper .authors { font-size: 0.95rem; color: var(--muted); margin-bottom: 8px; }
+  .paper .authors b { color: var(--ink); font-weight: 600; }
+  .paper .summary { margin-bottom: 10px; max-width: 62ch; }
+  .paper .links { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
+  .paper .links a {
+    font-family: var(--head); font-weight: 500; font-size: 0.9rem; text-decoration: none;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; color: var(--ink);
+  }
+  .paper .links a:hover { border-color: var(--trust); color: var(--trust); }
+
+  /* news */
+  .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .news li { display: grid; grid-template-columns: 76px 1fr; gap: 20px; }
+  .news .when { font-family: var(--head); font-weight: 700; color: var(--muted); }
+
+  /* background */
+  .bg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 36px; }
+  .bg-grid h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  .bg-grid p { margin: 0; font-size: 1rem; }
+  .bg-grid .sub { color: var(--muted); font-size: 0.92rem; }
+
+  /* contact */
+  .contact p { max-width: 58ch; }
+  .contact .mail { font-family: var(--head); font-weight: 600; font-size: 1.35rem; word-break: break-all; }
+  .contact .links { display: flex; gap: 10px 22px; flex-wrap: wrap; margin-top: 18px; font-family: var(--head); font-weight: 500; }
+  .contact address { font-style: normal; color: var(--muted); margin-top: 18px; font-size: 0.97rem; }
+
+  footer { padding: 48px 0 24px; color: var(--muted); font-size: 0.9rem; }
+
+  /* small screens */
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; }
+    .rail {
+      position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center;
+      gap: 12px 20px; padding: 18px 20px; border-right: 0; border-bottom: 1px solid var(--line);
+    }
+    .rail .role { display: none; }
+    .rail nav { flex-direction: row; flex-wrap: wrap; gap: 2px 14px; width: 100%; order: 3; }
+    .rail nav a { padding: 4px 0; border-left: 0; border-bottom: 3px solid transparent; }
+    .rail nav a[aria-current="true"] { border-bottom-color: var(--lamp); }
+    .rail .foot { margin: 0 0 0 auto; }
+    main { padding-top: 32px; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 17px; }
+    .paper, .news li { grid-template-columns: 1fr; gap: 2px; }
+    .meter { grid-template-columns: 1fr 52px; }
+    .meter .label { grid-column: 1 / -1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
 </head>
-
 <body>
-  <!-- Top Navigation (like the screenshot) -->
-  <nav class="navbar navbar-expand-lg topnav sticky-top">
-    <div class="container page-wrap">
-      <a class="navbar-brand" href="#">Md. Sazedur Rahman</a>
+<div class="shell">
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="publications.html">Publications</a></li>
-          <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
-          <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="#" title="Settings"><i class="fas fa-cog"></i></a>
-          </li>
-        </ul>
-      </div>
+  <header class="rail">
+    <div>
+      <a class="name" href="#top">Md. Sazedur Rahman</a>
+      <p class="role">PhD student, computer science<br>Missouri S&amp;T</p>
     </div>
-  </nav>
-
-  <main class="container page-wrap">
-    <!-- Hero -->
-    <h1 class="hero-title">Md. Sazedur Rahman</h1>
-    <div class="hero-subtitle">
-      PhD Student, Computer Science — <a href="https://www.mst.edu/" target="_blank" rel="noopener">Missouri S&amp;T</a>
+    <nav aria-label="Sections">
+      <a href="#research">Research</a>
+      <a href="#papers">Papers</a>
+      <a href="#news">News</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="foot">
+      <a href="cv/MdSazedurRahman_CV.pdf">Download CV (PDF)</a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark theme">Dark theme</button>
     </div>
+  </header>
 
-    <!-- About block (two-column like the screenshot) -->
-    <section id="about" class="content-block">
-      <div class="row">
-        <!-- Left: bio text -->
-        <div class="col-lg-8">
-          <p class="lead-paragraph">
-            Md. Sazedur Rahman is a PhD student focusing on <strong>security and privacy in cyber-physical systems</strong>,
-            with a particular emphasis on <strong>federated learning</strong> and <strong>robust aggregation</strong> for
-            underground mining environments. His work explores defenses against poisoning attacks (e.g., Sign-flip, Additive Noise label flipping),
-            trustworthy AI for distributed systems, and practical deployments using real-world mine data.
-          </p>
+  <main id="top">
 
-          <p class="lead-paragraph">
-            He previously completed his B.Sc. in <strong>Computer Science &amp; Engineering</strong> at
-            <a href="http://www.kuet.ac.bd" target="_blank" rel="noopener">Khulna University of Engineering &amp; Technology</a>
-            (Batch: 2018–2022). He also works as a <strong>Full Stack Developer</strong>, <strong>Android Developer</strong>,
-            and <strong>Competitive Programmer</strong>.
-          </p>
+    <section class="hero" aria-labelledby="h-hero">
+      <h1 id="h-hero">Federated learning that keeps working when some clients send bad updates.</h1>
+      <p class="lede">I'm a PhD student at Missouri S&amp;T. I design defenses against <strong>poisoning attacks in federated learning</strong> and test them on real data from underground mines, where a corrupted model can put people at risk.</p>
 
-          <p class="lead-paragraph">
-            You can find his code and projects on <a href="https://github.com/sazed49" target="_blank" rel="noopener">GitHub</a>
-            and connect via <a href="https://www.linkedin.com/in/md-sazedur-rahman-3804a723a/" target="_blank" rel="noopener">LinkedIn</a>.
-          </p>
+      <figure class="sim" id="sim">
+        <div class="sim-top">
+          <span class="title">Eight mine sensors train one shared model</span>
+          <span class="round" id="roundLabel" aria-live="polite">Round 0</span>
         </div>
-
-        <!-- Right: image + contact card -->
-        <div class="col-lg-4 mt-3 mt-lg-0">
-          <div class="profile-card">
-            <img src="images/mypic.jpg" alt="Profile photo" class="profile-img" />
-            <div class="social">
-              <a href="https://www.facebook.com/sazed49/" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-              <a href="https://www.linkedin.com/in/md-sazedur-rahman-3804a723a/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-              <a href="https://github.com/sazed49" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-              <a href="mailto:sazedcse17@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-            </div>
-            <div class="contact-box">
-Office: W2C Lab, Missouri S&amp;T
-Rolla, MO, USA
-
-Email: mrvfw@umsystem.edu
-Phone: +1 573-647-2108
-            </div>
+        <svg id="simSvg" viewBox="0 0 560 460" role="group" aria-label="Federated learning simulation: eight clients send updates to one server"></svg>
+        <div class="meters">
+          <div class="meter plain">
+            <span class="label">Plain averaging</span>
+            <div class="track"><div class="fill" id="fillPlain"></div></div>
+            <span class="pct" id="pctPlain">0%</span>
+          </div>
+          <div class="meter trust">
+            <span class="label">Trust-weighted</span>
+            <div class="track"><div class="fill" id="fillTrust"></div></div>
+            <span class="pct" id="pctTrust">0%</span>
           </div>
         </div>
+        <figcaption>Share of the shared model's update that comes from poisoned clients. Click a client to switch it between honest and poisoned. Plain averaging gives every client an equal say. Trust-weighted aggregation lowers the weight of clients whose updates look wrong. This is an illustration of the idea, not a result from my papers.</figcaption>
+        <button class="reset" id="resetBtn" type="button">Reset clients</button>
+      </figure>
+    </section>
+
+    <section id="research" aria-labelledby="h-research">
+      <h2 id="h-research">What I work on</h2>
+      <div class="threads">
+        <article class="thread">
+          <h3>Defending against poisoning attacks</h3>
+          <p>A few compromised or faulty clients can flip labels, flip gradient signs or add noise, and drag the shared model off course. I build aggregation methods that score how trustworthy each client's updates are and shrink the influence of the ones that are not.</p>
+          <p class="see">Papers: label-flip detection with trust-weighted aggregation (ACM DEBS 2026) and untargeted attack detection (IEEE MASS 2025).</p>
+        </article>
+        <article class="thread">
+          <h3>Learning from real underground mine data</h3>
+          <p>Mines are a hard setting: sensors are spread out, connections are unreliable, and mistakes are costly. I evaluate my methods on mine data, including a custom dataset of mine signs I built for this work, so the results reflect real deployment conditions.</p>
+          <p class="see">Papers: trust-weighted aggregation and the future-mining vision paper (COMSNETS 2026).</p>
+        </article>
+        <article class="thread">
+          <h3>Trustworthy AI for safety-critical systems</h3>
+          <p>The same questions come up wherever many devices feed one model: connected and autonomous vehicles, sensor networks and distributed systems. I work on spotting malicious sensors and abnormal data before they reach the model.</p>
+          <p class="see">Paper: CAV-AD, anomaly and malicious-sensor detection in vehicle networks (IEEE MASS 2024).</p>
+        </article>
       </div>
     </section>
 
-    <!-- Research Interest (like screenshot section) -->
-    <section id="research" class="section">
-      <h3>Research Interest</h3>
-      <p>
-        Dedicated to advancing privacy, security, and trustworthiness in AI for distributed systems and
-        cyber-physical environments. Current interests include:
-      </p>
-      <ul>
-        <li>Privacy-preserving and secure Federated Learning (FL)</li>
-        <li>Robust aggregation and attack detection (label-flip, noise, unreliable clients)</li>
-        <li>Trustworthy AI for underground mining and safety-critical CPS</li>
+    <section id="papers" aria-labelledby="h-papers">
+      <h2 id="h-papers">Papers</h2>
+      <!-- To add a paper link, add: <a href="URL">Paper</a> inside that paper's .links paragraph. -->
+      <ol class="papers">
+        <li class="paper">
+          <span class="when">2026</span>
+          <div>
+            <h3>Label-Flip Attack Detection via Trust-Weighted Aggregation in Federated Learning for Underground Mine Security</h3>
+            <p class="venue">ACM DEBS 2026</p>
+            <p class="authors"><b>Md. Sazedur Rahman</b>, Sanjay Madria, Samuel Frimpong</p>
+            <p class="summary">A trust-weighted federated learning defense that detects and limits label-flip attacks in underground mining environments.</p>
+            <p class="links"><a href="https://github.com/sazed49/DEBS_2026">Code</a></p>
+          </div>
+        </li>
+        <li class="paper">
+          <span class="when">2026</span>
+          <div>
+            <h3>Future Mining: Learning for Safety and Security</h3>
+            <p class="venue">COMSNETS 2026</p>
+            <p class="authors"><b>Md. Sazedur Rahman</b>, M. R. Jewel, Sanjay Madria</p>
+            <p class="summary">A look at how learning-based methods can improve safety, security and day-to-day operations in future mines.</p>
+          </div>
+        </li>
+        <li class="paper">
+          <span class="when">2025</span>
+          <div>
+            <h3>Detecting Untargeted Attacks and Mitigating Unreliable Updates in Federated Learning for Underground Mining Operations</h3>
+            <p class="venue">IEEE MASS 2025</p>
+            <p class="authors"><b>Md. Sazedur Rahman</b>, Mohamed Elmahallawy, Sanjay Madria, Samuel Frimpong</p>
+            <p class="summary">A robust federated learning framework that detects untargeted attacks and reduces the influence of unreliable client updates.</p>
+          </div>
+        </li>
+        <li class="paper">
+          <span class="when">2024</span>
+          <div>
+            <h3>CAV-AD: A Robust Framework for Detection of Anomalous Data and Malicious Sensors in CAV Networks</h3>
+            <p class="venue">IEEE MASS 2024</p>
+            <p class="authors"><b>Md. Sazedur Rahman</b>, Mohamed Elmahallawy, Sanjay Madria, Samuel Frimpong</p>
+            <p class="summary">An anomaly-detection framework that finds malicious sensors and abnormal data in connected and autonomous vehicle networks.</p>
+          </div>
+        </li>
+        <li class="paper">
+          <span class="when">2024</span>
+          <div>
+            <h3>Computing Skyline Query on Incomplete Data</h3>
+            <p class="venue">BigDML 2024</p>
+            <p class="authors"><b>Md. Sazedur Rahman</b>, KMA Hasan</p>
+            <p class="summary">Efficient skyline-query processing for datasets with missing values.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="news" aria-labelledby="h-news">
+      <h2 id="h-news">News</h2>
+      <!-- Add new items at the top. Use the real date when you have it. -->
+      <ul class="news">
+        <li><span class="when">2026</span><span>Paper on label-flip attack detection with trust-weighted aggregation accepted at ACM DEBS 2026.</span></li>
+        <li><span class="when">2026</span><span>Paper on learning for safety and security in future mining accepted at COMSNETS 2026.</span></li>
+        <li><span class="when">2025</span><span>Paper on detecting untargeted attacks in federated learning for underground mines presented at IEEE MASS 2025.</span></li>
+        <li><span class="when">2024</span><span>CAV-AD presented at IEEE MASS 2024.</span></li>
       </ul>
     </section>
 
-    <!-- Selected Publications -->
-<!-- Selected Work -->
-<section id="publications" class="section">
-
-  <div class="selected-work-header">
-
-    <h3>Selected Publications</h3>
-
-    <a href="publications.html" class="all-publications">
-      View All  &rarr;
-    </a>
-
-  </div>
-
-
-  <!-- Paper 1 -->
-  <div class="publication-item">
-
-    <div class="publication-top">
-
-      <h4 class="publication-title">
-        Label-Flip Attack Detection via Trust-Weighted Aggregation
-        in Federated Learning for Underground Mine Security
-      </h4>
-
-      <div class="publication-venue">
-        ACM DEBS · 2026
-      </div>
-
-    </div>
-
-    <p class="publication-description">
-      Trust-weighted federated learning defense for detecting and
-      mitigating label-flip attacks in underground mining environments.
-    </p>
-
-    <div class="publication-authors">
-      <strong>Md. Sazedur Rahman</strong>, Sanjay Madria, Samuel Frimpong
-    </div>
-
-    <div class="publication-links">
-      <a href="#">Paper</a>
-      <a href="https://github.com/sazed49/DEBS_2026"
-         target="_blank">Code</a>
-    </div>
-
-  </div>
-
-
-  <!-- Paper 2 -->
-  <div class="publication-item">
-
-    <div class="publication-top">
-
-      <h4 class="publication-title">
-        Future Mining: Learning for Safety and Security
-      </h4>
-
-      <div class="publication-venue">
-        COMSNETS · 2026
-      </div>
-
-    </div>
-
-    <p class="publication-description">
-      Exploring learning-driven approaches for improving safety,
-      security, and intelligent operations in future mining systems.
-    </p>
-
-    <div class="publication-authors">
-      <strong>Md. Sazedur Rahman</strong>, M. R. Jewel, Sanjay Madria
-    </div>
-
-    <div class="publication-links">
-      <a href="#">Paper</a>
-    </div>
-
-  </div>
-
-
-  <!-- Paper 3 -->
-  <div class="publication-item">
-
-    <div class="publication-top">
-
-      <h4 class="publication-title">
-        Detecting Untargeted Attacks and Mitigating Unreliable Updates
-        in Federated Learning for Underground Mining Operations
-      </h4>
-
-      <div class="publication-venue">
-        IEEE MASS · 2025
-      </div>
-
-    </div>
-
-    <p class="publication-description">
-      Robust federated learning framework for detecting untargeted attacks
-      and reducing the influence of unreliable client updates.
-    </p>
-
-    <div class="publication-authors">
-      <strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy,
-      Sanjay Madria, Samuel Frimpong
-    </div>
-
-    <div class="publication-links">
-      <a href="#">Paper</a>
-      <a href="#">Project</a>
-    </div>
-
-  </div>
-
-
-  <!-- Paper 4 -->
-  <div class="publication-item">
-
-    <div class="publication-top">
-
-      <h4 class="publication-title">
-        CAV-AD: A Robust Framework for Detection of Anomalous Data
-        and Malicious Sensors in CAV Networks
-      </h4>
-
-      <div class="publication-venue">
-        IEEE MASS · 2024
-      </div>
-
-    </div>
-
-    <p class="publication-description">
-      An anomaly-detection framework for identifying malicious sensors
-      and abnormal data in connected and autonomous vehicle networks.
-    </p>
-
-    <div class="publication-authors">
-      <strong>Md. Sazedur Rahman</strong>, Mohamed Elmahallawy,
-      Sanjay Madria, Samuel Frimpong
-    </div>
-
-    <div class="publication-links">
-      <a href="#">Paper</a>
-    </div>
-
-  </div>
-
-
-  <!-- Paper 5 -->
-  <div class="publication-item">
-
-    <div class="publication-top">
-
-      <h4 class="publication-title">
-        Computing Skyline Query on Incomplete Data
-      </h4>
-
-      <div class="publication-venue">
-        BigDML · 2024
-      </div>
-
-    </div>
-
-    <p class="publication-description">
-      Efficient skyline-query processing techniques for datasets
-      containing incomplete and missing information.
-    </p>
-
-    <div class="publication-authors">
-      <strong>Md. Sazedur Rahman</strong>, KMA Hasan
-    </div>
-
-    <div class="publication-links">
-      <a href="#">Paper</a>
-    </div>
-
-  </div>
-
-</section>
-
-    <!-- News (like screenshot) -->
-    <section id="news" class="section">
-      <h3>News</h3>
-
-      <div class="news-item">
-        <div class="news-date">Nov 20, 2024</div>
-        <div class="news-text">
-          Paper accepted in ACM/SIGAPP SAC 2025 (example placeholder — replace with your actual news).
+    <section id="background" aria-labelledby="h-background">
+      <h2 id="h-background">Background</h2>
+      <div class="bg-grid">
+        <div>
+          <h3>PhD, computer science</h3>
+          <p>Missouri S&amp;T, Rolla, Missouri</p>
+          <p class="sub">W2C Lab. Research on security and privacy in cyber-physical systems.</p>
         </div>
-      </div>
-
-      <div class="news-item">
-        <div class="news-date">Oct 26, 2024</div>
-        <div class="news-text">
-          Multiple papers accepted for presentation (example placeholder).
+        <div>
+          <h3>B.Sc., computer science and engineering</h3>
+          <p>Khulna University of Engineering &amp; Technology</p>
+          <p class="sub">Batch of 2018 to 2022.</p>
         </div>
-      </div>
-
-      <div class="news-item" style="border-bottom:none;">
-        <div class="news-date">Jun 24, 2024</div>
-        <div class="news-text">
-          Work presented at IEEE MASS 2024 (example placeholder).
+        <div>
+          <h3>Also</h3>
+          <p>Full stack and Android developer, and competitive programmer.</p>
+          <p class="sub">Code and projects are on <a href="https://github.com/sazed49">GitHub</a>.</p>
+        </div>
+        <div>
+          <h3>Works with</h3>
+          <p>Sanjay Madria, Samuel Frimpong and Mohamed Elmahallawy.</p>
         </div>
       </div>
     </section>
 
-    <!-- CV -->
-    <section id="cv" class="section">
-      <h3>Curriculum Vitae</h3>
-      <p>
-        <a href="cv/MdSazedurRahman_CV.pdf" class="btn btn-sm" style="background:var(--accent);color:#fff;font-weight:700;border-radius:6px;" target="_blank" rel="noopener">
-          Download CV (PDF)
-        </a>
-      </p>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="section">
-      <h3>Contact</h3>
-      <div class="row">
-        <div class="col-md-4"><i class="fa fa-phone"></i> +1 573-647-2108</div>
-        <div class="col-md-4"><i class="fa fa-envelope"></i> mrvfw@umsystem.edu</div>
-        <div class="col-md-4"><i class="fa fa-map-marker-alt"></i> Rolla, Missouri, USA</div>
+    <section id="contact" class="contact" aria-labelledby="h-contact">
+      <h2 id="h-contact">Contact</h2>
+      <p>I'm happy to talk about federated learning security, mining applications and collaborations.</p>
+      <a class="mail" href="mailto:mrvfw@umsystem.edu">mrvfw@umsystem.edu</a>
+      <div class="links">
+        <a href="https://github.com/sazed49">GitHub</a>
+        <a href="https://www.linkedin.com/in/md-sazedur-rahman-3804a723a/">LinkedIn</a>
+        <a href="cv/MdSazedurRahman_CV.pdf">CV (PDF)</a>
       </div>
+      <address>W2C Lab, Missouri S&amp;T, Rolla, Missouri, USA</address>
     </section>
 
     <footer>
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
-        <div>
-          <strong>Full Stack Developer</strong> • Competitive Programmer • Researcher
-        </div>
-        <div class="mt-2 mt-md-0">
-          <a href="https://github.com/sazed49" target="_blank" rel="noopener">GitHub</a>
-          <span class="mx-2">·</span>
-          <a href="https://www.linkedin.com/in/md-sazedur-rahman-3804a723a/" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-      </div>
+      <span>&copy; 2026 Md. Sazedur Rahman. Last updated November 2026.</span>
     </footer>
   </main>
+</div>
 
-  <!-- JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+  /* ---------- theme ---------- */
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  function systemTheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  function applyTheme(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? 'Light theme' : 'Dark theme';
+  }
+  applyTheme(saved || systemTheme());
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+
+  /* ---------- active section in nav ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.rail nav a'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (a) {
+            a.removeAttribute('aria-current');
+            if (a.getAttribute('href') === '#' + en.target.id) a.setAttribute('aria-current', 'true');
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    targets.forEach(function (t) { if (t) io.observe(t); });
+  }
+
+  /* ---------- federated learning illustration ---------- */
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('simSvg');
+  var N = 8, CX = 280, CY = 230, R = 168;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var round = 0, timer = null;
+  var clients = [];
+
+  function el(name, attrs, parent) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+
+  var linesG = el('g', {}, svg);
+  var dotsG = el('g', {}, svg);
+  var clientsG = el('g', {}, svg);
+
+  for (var i = 0; i < N; i++) {
+    var a = -Math.PI / 2 + i * 2 * Math.PI / N;
+    var c = { x: CX + R * Math.cos(a), y: CY + R * Math.sin(a), bad: false, w: 1, t: i / N };
+    c.line = el('line', { x1: c.x, y1: c.y, x2: CX, y2: CY, 'class': 'line' }, linesG);
+    c.dot = el('circle', { r: 4, 'class': 'dot' }, dotsG);
+    c.g = el('g', { 'class': 'client', tabindex: 0, role: 'button' }, clientsG);
+    c.disc = el('circle', { cx: c.x, cy: c.y, r: 24, 'class': 'disc' }, c.g);
+    var tx = el('text', { x: c.x, y: c.y }, c.g);
+    tx.textContent = 'C' + (i + 1);
+    clients.push(c);
+    (function (c, i) {
+      c.g.addEventListener('click', function () { toggle(c); });
+      c.g.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(c); }
+      });
+    })(c, i);
+  }
+  var serverG = el('g', { 'class': 'server' }, svg);
+  el('circle', { cx: CX, cy: CY, r: 38, 'class': 'disc' }, serverG);
+  var st = el('text', { x: CX, y: CY }, serverG);
+  st.textContent = 'Server';
+
+  function label(c, i) {
+    return 'Client ' + (i + 1) + ', ' + (c.bad ? 'poisoned' : 'honest') + '. Press to make it ' + (c.bad ? 'honest' : 'poisoned') + '.';
+  }
+
+  function render() {
+    var nBad = 0, sumAll = 0, sumBad = 0;
+    clients.forEach(function (c, i) {
+      if (c.bad) nBad++;
+      sumAll += c.w;
+      if (c.bad) sumBad += c.w;
+      c.line.setAttribute('stroke-width', (1 + c.w * 5).toFixed(2));
+      c.line.setAttribute('stroke-opacity', (0.25 + c.w * 0.6).toFixed(2));
+      c.line.style.stroke = c.bad ? 'var(--poison)' : '';
+      c.g.setAttribute('class', 'client' + (c.bad ? ' bad' : ''));
+      c.g.setAttribute('aria-pressed', c.bad ? 'true' : 'false');
+      c.g.setAttribute('aria-label', label(c, i));
+      c.dot.setAttribute('class', 'dot' + (c.bad ? ' bad' : ''));
+      c.dot.setAttribute('r', (2 + c.w * 3.5).toFixed(2));
+      if (reduce) {
+        c.dot.setAttribute('cx', c.x); c.dot.setAttribute('cy', c.y);
+        c.dot.style.display = 'none';
+      }
+    });
+    var plain = nBad / N * 100;
+    var trust = sumAll > 0 ? sumBad / sumAll * 100 : 0;
+    document.getElementById('fillPlain').style.width = plain + '%';
+    document.getElementById('fillTrust').style.width = trust + '%';
+    document.getElementById('pctPlain').textContent = Math.round(plain) + '%';
+    document.getElementById('pctTrust').textContent = (trust < 1 && trust > 0 ? '<1' : Math.round(trust)) + '%';
+    document.getElementById('roundLabel').textContent = 'Round ' + round;
+  }
+
+  function step() {
+    var settled = true;
+    clients.forEach(function (c) {
+      var target = c.bad ? 0.04 : 1;
+      c.w = c.bad ? c.w * 0.6 : c.w + (1 - c.w) * 0.45;
+      if (Math.abs(c.w - target) < 0.012) c.w = target; else settled = false;
+    });
+    round++;
+    return settled;
+  }
+
+  function kick() {
+    if (timer) return;
+    timer = setInterval(function () {
+      var done = step();
+      render();
+      if (done) { clearInterval(timer); timer = null; }
+    }, 450);
+  }
+
+  function toggle(c) { c.bad = !c.bad; kick(); render(); }
+
+  function reset() {
+    clients.forEach(function (c, i) { c.bad = (i === 2 || i === 5); c.w = 1; });
+    round = 0;
+    if (timer) { clearInterval(timer); timer = null; }
+    render();
+    kick();
+  }
+  document.getElementById('resetBtn').addEventListener('click', reset);
+
+  /* update dots travelling from each client to the server */
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    clients.forEach(function (c) {
+      c.t = (c.t + dt * 0.35) % 1;
+      c.dot.setAttribute('cx', (c.x + (CX - c.x) * c.t).toFixed(1));
+      c.dot.setAttribute('cy', (c.y + (CY - c.y) * c.t).toFixed(1));
+    });
+    if (!document.hidden) requestAnimationFrame(frame); else waitVisible();
+  }
+  function waitVisible() {
+    var h = function () {
+      if (!document.hidden) { document.removeEventListener('visibilitychange', h); last = performance.now(); requestAnimationFrame(frame); }
+    };
+    document.addEventListener('visibilitychange', h);
+  }
+  if (!reduce) requestAnimationFrame(frame);
+
+  reset();
+})();
+</script>
 </body>
 </html>
